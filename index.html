@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mitchell Visuals</title>
+  <meta name="description" content="Mitchell Visuals — Fotografía y video. Portafolio, servicios y clientes." />
+  <meta name="theme-color" content="#05060a" />
+  <link rel="icon" type="image/png" href="assets/mark.png" />
+  <meta property="og:title" content="Mitchell Visuals" />
+  <meta property="og:description" content="Fotografía y video con visión futurista." />
+  <meta property="og:image" content="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="is-loading">
+
+  <!-- ================= INTRO ================= -->
+  <div id="intro" aria-hidden="true">
+    <canvas id="intro-canvas"></canvas>
+    <div class="intro-hud">
+      <span class="hud-corner tl"></span><span class="hud-corner tr"></span>
+      <span class="hud-corner bl"></span><span class="hud-corner br"></span>
+      <div class="hud-top mono"><span>MV//SYS</span><span id="intro-status">INICIALIZANDO</span></div>
+      <div class="hud-bottom mono"><span>LAT 00.000 · LON 00.000</span><span><b id="intro-pct">000</b>%</span></div>
+    </div>
+    <div class="intro-ring"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="92" /><circle class="ring-prog" cx="100" cy="100" r="92" /></svg></div>
+    <div class="intro-logo">
+      <img class="l-base" src="assets/logo.png" alt="" />
+      <img class="l-cyan" src="assets/logo.png" alt="" />
+      <img class="l-mag" src="assets/logo.png" alt="" />
+      <span class="intro-scan"></span>
+    </div>
+    <div class="intro-flash"></div>
+    <button class="intro-skip mono" type="button">SALTAR ›</button>
+  </div>
+
+  <div class="grain"></div>
+  <div class="cursor"><span></span></div>
+  <div class="scroll-bar"></div>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav">
+    <a href="#top" class="nav-logo" aria-label="Inicio"><img src="assets/mark.png" alt="Mitchell Visuals" /></a>
+    <nav class="nav-links">
+      <a href="#sobre">Sobre mí</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#clientes">Clientes</a>
+      <a href="#portafolio">Portafolio</a>
+      <a href="#contacto" class="nav-cta">Contacto</a>
+    </nav>
+    <button class="nav-burger" aria-label="Menú"><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-inner">
+        <p class="eyebrow mono reveal-up"><span class="dot"></span> FOTOGRAFÍA · VIDEO · DIRECCIÓN VISUAL</p>
+        <h1 class="hero-title">
+          <span class="line"><span class="word" data-split>MITCHELL</span></span>
+          <span class="line"><span class="word outline" data-split>VISUALS</span></span>
+        </h1>
+        <p class="hero-sub reveal-up" id="hero-sub"></p>
+        <div class="hero-actions reveal-up">
+          <a class="btn btn-primary magnetic" href="#portafolio"><span>Ver portafolio</span></a>
+          <a class="btn btn-ghost magnetic" href="#contacto"><span>Trabajemos juntos</span></a>
+        </div>
+      </div>
+      <div class="hero-meta mono">
+        <span>EST. 2025</span>
+        <span class="scroll-hint">SCROLL <i></i></span>
+        <span id="clock">--:--:--</span>
+      </div>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <div class="marquee"><div class="marquee-track" id="marquee"></div></div>
+
+    <!-- ================= SOBRE MÍ ================= -->
+    <section class="section about" id="sobre">
+      <div class="section-head">
+        <span class="mono idx">01</span>
+        <h2 class="section-title" data-split>Sobre mí</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-photo tilt">
+          <div class="frame" id="about-photo"></div>
+          <span class="hud-corner tl"></span><span class="hud-corner br"></span>
+          <span class="photo-tag mono">REC ● <span id="about-tag">MITCHELL</span></span>
+        </div>
+        <div class="about-text">
+          <p class="lead" id="about-lead"></p>
+          <p class="body" id="about-body"></p>
+          <div class="stats" id="stats"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICIOS ================= -->
+    <section class="section services" id="servicios">
+      <div class="section-head">
+        <span class="mono idx">02</span>
+        <h2 class="section-title" data-split>Servicios</h2>
+      </div>
+      <div class="services-grid" id="services"></div>
+    </section>
+
+    <!-- ================= CLIENTES ================= -->
+    <section class="section clients" id="clientes">
+      <div class="section-head">
+        <span class="mono idx">03</span>
+        <h2 class="section-title" data-split>Clientes</h2>
+      </div>
+      <p class="section-intro">Marcas, artistas y personas que han confiado en mi lente.</p>
+      <div class="clients-grid" id="clients"></div>
+    </section>
+
+    <!-- ================= PORTAFOLIO ================= -->
+    <section class="section portfolio" id="portafolio">
+      <div class="section-head">
+        <span class="mono idx">04</span>
+        <h2 class="section-title" data-split>Portafolio</h2>
+      </div>
+      <div class="portals" id="portals"></div>
+    </section>
+
+    <!-- ================= CONTACTO ================= -->
+    <section class="section contact" id="contacto">
+      <p class="mono eyebrow"><span class="dot"></span> DISPONIBLE PARA PROYECTOS</p>
+      <h2 class="contact-title"><span data-split>¿Creamos algo</span><br /><span class="grad" data-split>épico?</span></h2>
+      <div class="contact-links" id="contact-links"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img src="assets/logo.png" alt="Mitchell Visuals" class="footer-logo" />
+    <p class="mono">© <span id="year"></span> MITCHELL VISUALS — TODOS LOS DERECHOS RESERVADOS</p>
+  </footer>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

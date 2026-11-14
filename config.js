@@ -6,8 +6,25 @@
 window.SITE = {
   hero: {
     // Foto grande en la portada (déjala "" para no mostrar ninguna)
-    photo: "assets/img/mitchell-2.jpg",
+    photo: "",
     subtitle: "Capturo momentos con estética de otro tiempo: luz, movimiento y emoción convertidos en imágenes que se sienten del futuro.",
+  },
+
+  // Sección "Mi equipo": la cámara 3D se desarma y muestra estas etiquetas.
+  // Formato: "Título|detalle"
+  gear: {
+    model: "Sony α7 II",
+    sub: "FULL-FRAME · MIRRORLESS · E-MOUNT",
+    specs: {
+      lens: "Óptica E-mount|Lentes intercambiables",
+      sensor: "Sensor full-frame|24.3 MP Exmor CMOS",
+      processor: "Procesador BIONZ X|Color y detalle reales",
+      evf: "Visor OLED|2.36 M puntos",
+      screen: "Pantalla 3\"|LCD abatible",
+      battery: "Batería NP-FW50|Para sesiones largas",
+      ibis: "Estabilización 5 ejes|SteadyShot INSIDE",
+      dials: "Control manual|Diales dedicados",
+    },
   },
 
   about: {

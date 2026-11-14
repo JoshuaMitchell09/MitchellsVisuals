@@ -28,6 +28,7 @@ Luego abre http://localhost:8080
 index.html      estructura de la página
 styles.css      estilos
 main.js         animaciones e interacciones
+stage.js        cámara 3D (Sony α7 II) que se arma/desarma con el scroll
 config.js       ← tu contenido
-assets/         logo, fotos y librerías (GSAP)
+assets/         logo, fotos y librerías (GSAP, Three.js)
 ```

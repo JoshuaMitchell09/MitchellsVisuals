@@ -68,6 +68,7 @@
   const mq = S.marquee.map((t) => `<span>${esc(t)}</span>`).join("");
   $("#marquee").innerHTML = mq + mq;
   $("#year").textContent = new Date().getFullYear();
+  if (S.gear) { $("#gear-model").textContent = S.gear.model; $("#gear-sub").textContent = S.gear.sub; }
 
   /* Split text into chars */
   $$("[data-split]").forEach((el) => {
@@ -82,6 +83,7 @@
   if (!window.gsap || reduced) {
     $("#intro").remove();
     document.body.classList.remove("is-loading");
+    window.STAGE && STAGE.assemble();
     $$("[data-count]").forEach((b) => (b.textContent = b.dataset.count + b.dataset.suffix));
     return;
   }
@@ -186,15 +188,20 @@
   gsap.set(".hero-meta", { opacity: 0 });
 
   function heroIn() {
+    window.STAGE && STAGE.assemble();
     gsap.timeline({ defaults: { ease: "expo.out" } })
       .to(".hero-title .char", { yPercent: 0, rotateX: 0, opacity: 1, duration: 1.4, stagger: 0.045 })
       .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.1, stagger: 0.12 }, 0.4)
       .to(".nav", { y: 0, opacity: 1, duration: 1 }, 0.5)
       .to(".hero-meta", { opacity: 1, duration: 1 }, 0.9)
       .from("#hero-canvas", { opacity: 0, duration: 2 }, 0)
-      .from(".hero-portrait", { clipPath: "inset(0 0 0 100%)", duration: 1.6, ease: "expo.inOut" }, 0.1)
-      .from(".hp-main", { scale: 1.25, duration: 2.2, ease: "expo.out" }, 0.1)
-      .add(() => $(".hero-portrait")?.classList.add("live"), 1.2);
+      .add(() => {
+        const hp = $(".hero-portrait");
+        if (!hp) return;
+        gsap.from(hp, { clipPath: "inset(0 0 0 100%)", duration: 1.6, ease: "expo.inOut" });
+        gsap.from(".hp-main", { scale: 1.25, duration: 2.2, ease: "expo.out" });
+        setTimeout(() => hp.classList.add("live"), 1100);
+      }, 0.1);
     ScrollTrigger.refresh();
   }
 
@@ -256,6 +263,13 @@
   gsap.to(".hero-inner", { yPercent: 30, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
 
   /* ================= SCROLL ANIMATIONS ================= */
+  // Medidor del desarme en "Mi equipo"
+  const gpct = $("#gear-pct"), gbar = $("#gear-bar");
+  ScrollTrigger.create({
+    trigger: "#equipo", start: "top top", end: "bottom bottom",
+    onUpdate: (s) => { const v = Math.min(1, s.progress / 0.75); gpct.textContent = String(Math.round(v * 100)).padStart(3, "0"); gbar.style.transform = `scaleX(${v})`; },
+  });
+  ScrollTrigger.addEventListener("refresh", () => window.STAGE && STAGE.refresh());
   gsap.to(".scroll-bar", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } });
   ScrollTrigger.create({ start: 80, onToggle: (s) => $(".nav").classList.toggle("scrolled", s.isActive) });
 

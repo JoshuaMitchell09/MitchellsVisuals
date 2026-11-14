@@ -93,6 +93,7 @@ window.SITE = {
   ],
 
   contact: [
+    { label: "Instagram", value: "@Mitchells_Visuals", url: "https://instagram.com/Mitchells_Visuals" },
     { label: "WhatsApp", value: "+506 7135-0454", url: "https://wa.me/50671350454" },
     { label: "Email", value: "Mitchells_Visuals@outlook.com", url: "mailto:Mitchells_Visuals@outlook.com" },
     { label: "Portafolio", value: "Ver en Pixieset", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/" },

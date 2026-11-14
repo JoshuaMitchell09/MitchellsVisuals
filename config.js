@@ -25,13 +25,27 @@ window.SITE = {
       ibis: "Estabilización 5 ejes|SteadyShot INSIDE",
       dials: "Control manual|Diales dedicados",
     },
-    // Lista de todo tu equipo (aparece debajo de la cámara 3D)
+    // Lista de todo tu equipo (sección "Mi equipo")
     kit: [
       { cat: "Cámaras", items: ["Sony α7 II", "Sony α7R"] },
       { cat: "Lentes", items: ["Sigma 100-400 mm", "Sony 16-50 mm"] },
       { cat: "Audio", items: ["Micrófono DJI Mini 2", "Micrófono DJI 3"] },
       { cat: "Estabilización", items: ["Estabilizador para celular"] },
     ],
+  },
+
+  // Lo que dice la cabra en cada sección (y al hacerle clic)
+  mascot: {
+    lines: {
+      top: "¡Meeeeeeh! Bienvenido.",
+      equipo: "Con esto hago la magia.",
+      sobre: "Recuerda: cabra solo hay una.",
+      servicios: "¿Qué necesitas? Yo me encargo.",
+      clientes: "Ellos ya confiaron. ¿Sigues tú?",
+      portafolio: "Aquí está lo bueno. Dale clic.",
+      contacto: "Escríbeme… meeeeeh.",
+    },
+    random: ["¡Meeeeeeeeeh!", "Cabra solo hay una.", "El GOAT de la foto.", "¿Una foto? ¡Clic!", "Meeeh… dale scroll."],
   },
 
   about: {

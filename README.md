@@ -28,9 +28,9 @@ Luego abre http://localhost:8080
 index.html      estructura de la página
 styles.css      estilos
 main.js         animaciones e interacciones
-stage.js        cámara 3D (Sony α7 II) que se arma/desarma con el scroll
+mascot.js       la cabra que salta por la página (textos en config.js → mascot)
 intro.js        intro stop-motion de la cabra + música
 assets/audio/   musica.mp3 (reemplázalo para cambiar la canción)
 config.js       ← tu contenido
-assets/         logo, fotos y librerías (GSAP, Three.js)
+assets/         logo, fotos, audio y librerías (GSAP)
 ```

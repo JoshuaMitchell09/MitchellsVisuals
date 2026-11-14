@@ -52,12 +52,11 @@
     .join("");
 
   $("#year").textContent = new Date().getFullYear();
-  if (S.gear) { $("#gear-model").textContent = S.gear.model; $("#gear-sub").textContent = S.gear.sub; }
   if (S.gear && S.gear.kit) {
     $("#kit-grid").innerHTML = S.gear.kit
       .map((g, i) => `<div class="kit-col"><span class="mono">${pad(i)} — ${esc(g.cat)}</span><ul>${g.items.map((it) => `<li>${esc(it)}</li>`).join("")}</ul></div>`)
       .join("");
-  } else $("#kit").remove();
+  }
 
   $$("[data-split]").forEach((el) => {
     el.innerHTML = [...el.textContent].map((c) => (c === " " ? " " : `<span class="char">${esc(c)}</span>`)).join("");
@@ -73,7 +72,7 @@
 
   /* ================= SIN GSAP ================= */
   if (!window.gsap || reduced) {
-    window.MV_HERO_IN = () => window.STAGE && STAGE.assemble();
+    window.MV_HERO_IN = () => window.MASCOT && MASCOT.start();
     $$("[data-count]").forEach((b) => (b.textContent = b.dataset.count + b.dataset.suffix));
     return;
   }
@@ -86,7 +85,7 @@
 
   window.MV_HERO_IN = heroIn;
   function heroIn() {
-    window.STAGE && STAGE.assemble();
+    window.MASCOT && MASCOT.start();
     gsap.timeline({ defaults: { ease: "expo.out" } })
       .to(".hero-title .char", { yPercent: 0, duration: 0.5, ease: "steps(4)", stagger: { each: 0.05, from: "random" } })
       .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 }, 0.35)
@@ -96,12 +95,6 @@
   gsap.to(".hero-inner", { yPercent: 20, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
 
   /* ================= SCROLL ================= */
-  const gpct = $("#gear-pct"), gbar = $("#gear-bar");
-  ScrollTrigger.create({
-    trigger: "#equipo", start: "top top", end: "bottom bottom",
-    onUpdate: (s) => { const v = Math.min(1, s.progress / 0.75); gpct.textContent = String(Math.round(v * 100)).padStart(3, "0"); gbar.style.transform = `scaleX(${v})`; },
-  });
-  ScrollTrigger.addEventListener("refresh", () => window.STAGE && STAGE.refresh());
   gsap.to(".scroll-bar", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } });
   ScrollTrigger.create({ start: 60, onToggle: (s) => $(".nav").classList.toggle("scrolled", s.isActive) });
 
@@ -124,7 +117,7 @@
   expose(".about-photo .frame img:not(.alt)", ".about");
   expose(".client img", ".clients-grid");
   expose(".portal .bg img", ".portals");
-  $$(".section-head .idx, .gear-head .idx").forEach((el) => up(el, el));
+  $$(".section-head .idx").forEach((el) => up(el, el));
 
   // Sobre mí
   gsap.fromTo(".about-photo .frame", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "expo.inOut", scrollTrigger: { trigger: ".about", start: "top 75%" } });
@@ -136,7 +129,6 @@
   });
 
   // Kit
-  up(".kit-head > *", ".kit");
   up(".kit-col", ".kit-grid", { stagger: 0.1 });
 
   // Servicios

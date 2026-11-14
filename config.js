@@ -58,11 +58,11 @@ window.SITE = {
     { name: "Zona Fut", type: "Fútbol · Medios", image: "assets/img/cliente-zonafut.jpg", fit: "contain", link: "" },
     { name: "Ascenso Total", type: "Fútbol · Medios", image: "assets/img/cliente-ascenso-total.jpg", fit: "cover", link: "" },
     { name: "LSBF · Davivienda", type: "Liga deportiva", image: "assets/img/cliente-lsbf.jpg", fit: "contain", link: "" },
-    { name: "Prime Supplements CR", type: "Suplementos deportivos", image: "", fit: "contain", link: "" },
+    { name: "Prime Supplements CR", type: "Suplementos deportivos", image: "assets/img/cliente-prime-supplements.png", fit: "contain", link: "" },
     { name: "Suministros PR", type: "Marca", image: "assets/img/cliente-suministros-pr.jpg", fit: "cover", link: "" },
     { name: "IPT", type: "Marca", image: "assets/img/cliente-ipt.jpg", fit: "cover", link: "" },
-    { name: "La Adelita", type: "Restaurante", image: "", fit: "contain", link: "" },
-    { name: "Upsidedown", type: "Marca", image: "", fit: "contain", link: "" },
+    { name: "La Adelita", type: "Restaurante", image: "assets/img/cliente-la-adelita.jpg", fit: "cover", link: "" },
+    { name: "Upsidedown", type: "Marca", image: "assets/img/cliente-upsidedown.png", fit: "contain", link: "" },
   ],
 
   // Links al portafolio. Cuando tengas el de video, pon el link y cambia soon a false.

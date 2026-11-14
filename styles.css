@@ -352,3 +352,5 @@ body.menu-open .nav-burger span:last-child { top: 11px; transform: rotate(-45deg
 .client:has(img) .info { height: 74px; padding: 14px 18px; background: rgba(5, 6, 10, 0.94); border-top: 1px solid var(--line); }
 .client:has(img) .scan { bottom: 74px; }
 .client.contain:has(img) img { padding: 10px; }
+.client.contain:has(img[src$=".png"]) img { padding: 28px 30px; }
+.client:has(img) .info h4 { font-size: clamp(.78rem, 1.05vw, 1.05rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -489,3 +489,6 @@ body.menu-open .mascot, body.menu-open .sound { opacity: 0 !important; pointer-e
 .op-scene { height: min(78vh, 100vw); margin-top: 12vh; }
 .op-meh { top: 3.5vh; font-size: clamp(2.4rem, 8vw, 6.4rem); }
 @media (max-width: 820px) { .op-scene { width: 88vw; height: auto; margin-top: 6vh; } .op-meh { top: 14vh; font-size: 12vw; } }
+.op-scene { aspect-ratio: 894 / 1142; height: min(80vh, 120vw); margin-top: 11vh; }
+.op-svg { overflow: hidden; }
+@media (max-width: 820px) { .op-scene { width: 80vw; height: auto; } }

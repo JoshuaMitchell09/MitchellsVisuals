@@ -219,15 +219,15 @@
   meh.innerHTML = [...meh.textContent].map((c) => `<span>${c}</span>`).join("");
   const J = ".gs-jaw", HEAD = ".gs-head, .gs-horns, .gs-ear-l, .gs-ear-r, .gs-jaw";
   gsap.set(".gs-camera", { y: 420 });
-  gsap.set(".gs-grass", { svgOrigin: "400 612" });
-  gsap.set(".gs-lid", { scaleY: 0, transformOrigin: "50% 100%" });
+  gsap.set(".gs-grass", { svgOrigin: "450 911" });
+  gsap.set(".gs-lid", { scaleY: 0, transformOrigin: "50% 0%" });
   gsap.set(".gs-ear-l", { svgOrigin: "300 330" });
   gsap.set(".gs-ear-r", { svgOrigin: "500 330" });
-  gsap.set(".gs-mouth", { svgOrigin: "400 608" });
+  gsap.set(".gs-mouth", { svgOrigin: "450 905" });
   const blink = () => gsap.timeline().to(".gs-lid", { scaleY: 1, duration: 0.07, ease: "none" }).to(".gs-lid", { scaleY: 0, duration: 0.1, ease: "none" }, "+=0.05");
   const chew = (n) => {
     const t = gsap.timeline();
-    for (let k = 0; k < n; k++) t.to(J, { y: 9, x: k % 2 ? 2 : -2, duration: 0.14, ease: "sine.inOut" }).to(J, { y: 0, x: 0, duration: 0.14, ease: "sine.inOut" });
+    for (let k = 0; k < n; k++) t.to(J, { y: 13, x: k % 2 ? 2 : -2, duration: 0.14, ease: "sine.inOut" }).to(J, { y: 0, x: 0, duration: 0.14, ease: "sine.inOut" });
     return t;
   };
   const op = gsap.timeline({ onComplete: startFilm, delay: 0.15 })
@@ -242,9 +242,9 @@
     .add(blink(), 2.4)
     .set(".gs-grass", { opacity: 0 }, 2.95)
     // agarra la cámara
-    .to(HEAD, { rotate: -3, svgOrigin: "400 600", duration: 0.3, ease: "power2.out" }, 3.0)
+    .to(HEAD, { rotate: -3, svgOrigin: "450 880", duration: 0.3, ease: "power2.out" }, 3.0)
     .to(".gs-camera", { y: 0, duration: 0.65, ease: "back.out(1.4)" }, 3.05)
-    .to(HEAD, { rotate: 0, svgOrigin: "400 600", duration: 0.3 }, 3.5)
+    .to(HEAD, { rotate: 0, svgOrigin: "450 880", duration: 0.3 }, 3.5)
     // ¡clic!
     .to(".gs-flashbulb", { fill: "#ffffff", duration: 0.05 }, 4.15)
     .to(".gs-camera", { y: 8, duration: 0.06, yoyo: true, repeat: 1 }, 4.15)
@@ -253,8 +253,8 @@
     // baja la cámara
     .to(".gs-camera", { y: 420, duration: 0.5, ease: "power2.in" }, 4.75)
     // MEEEEEEEH
-    .to(J, { y: 26, duration: 0.18, ease: "power2.out" }, 5.25)
-    .to(".gs-mouth", { scaleY: 3.2, scaleX: 1.25, duration: 0.18, ease: "power2.out" }, 5.25)
+    .to(J, { y: 46, duration: 0.18, ease: "power2.out" }, 5.25)
+    .to(".gs-mouth", { scaleY: 4.2, scaleX: 1.1, duration: 0.18, ease: "power2.out" }, 5.25)
     .to(".gs-ear-l", { rotate: -9, duration: 0.2 }, 5.25)
     .to(".gs-ear-r", { rotate: 9, duration: 0.2 }, 5.25)
     .to(".op-svg", { rotate: 2.5, transformOrigin: "50% 80%", yoyo: true, repeat: 7, duration: 0.09, ease: "sine.inOut" }, 5.3)

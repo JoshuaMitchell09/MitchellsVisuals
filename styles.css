@@ -501,3 +501,11 @@ body.menu-open .mascot, body.menu-open .sound { opacity: 0 !important; pointer-e
   .hero-goat { right: 50%; margin-right: calc(min(46vh, 72vw) * -0.39); top: 76px; margin-top: 0; height: min(46vh, 72vw); }
   .hero { padding-top: calc(76px + min(46vh, 72vw)); }
 }
+/* Portadas del portafolio: más visibles */
+.portal .bg img { filter: none; opacity: .62; }
+.portal:hover .bg img { opacity: .85; }
+.portal:nth-child(1) .bg img { object-position: 50% 62%; }
+.portal:nth-child(2) .bg img { object-position: 50% 32%; }
+.portal:nth-child(1) .bg img { object-position: 50% 58%; opacity: .95; filter: brightness(1.35) contrast(1.05); }
+.portal:nth-child(1):hover .bg img { opacity: 1; }
+.portal::before { background: linear-gradient(to top, rgba(10,10,11,.92) 12%, rgba(10,10,11,.15) 60%, rgba(10,10,11,0)); }

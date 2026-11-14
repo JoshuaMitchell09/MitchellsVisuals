@@ -107,8 +107,8 @@ window.SITE = {
 
   // Links al portafolio. Cuando tengas el de video, pon el link y cambia soon a false.
   portfolio: [
-    { title: "Fotografía", desc: "Todos mis trabajos: retratos, marcas, eventos y más.", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/", soon: false, cover: "assets/img/mitchell-1.jpg" },
-    { title: "Deportes", desc: "Partidos, atletas y la acción del fútbol desde la cancha.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliodeportivo/", soon: false, cover: "assets/img/mitchell-2.jpg" },
+    { title: "Fotografía", desc: "Todos mis trabajos: retratos, marcas, eventos y más.", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/", soon: false, cover: "assets/img/portada-fotografia.jpg" },
+    { title: "Deportes", desc: "Partidos, atletas y la acción del fútbol desde la cancha.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliodeportivo/", soon: false, cover: "assets/img/portada-deportes.jpg" },
     { title: "Video", desc: "Reels, videoclips y piezas audiovisuales.", url: "", soon: true, cover: "" },
   ],
 

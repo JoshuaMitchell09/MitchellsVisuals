@@ -65,18 +65,18 @@ window.SITE = {
     body: [
       "Desde 2025 trabajo bajo el nombre Mitchell Visuals, buscando imágenes con carácter: luz contrastada, color con intención y el momento exacto en que pasa algo.",
       "Mi base es la fotografía deportiva. He cubierto fútbol para medios como Zona Fut y Ascenso Total —el fútbol que no ves— y baloncesto con la LSBF Davivienda. En la cancha aprendí a anticipar la jugada y a no perder el instante.",
-      "Ese mismo ojo lo llevo a marcas y negocios como Prime Supplements CR, Suministros PR, IPT, La Adelita y Upsidedown: fotos de producto, retratos y contenido listo para redes.",
+      "Ese mismo ojo lo llevo a marcas y negocios como Prime Supplements CR, Suministros PR, IPT, La Adelita, Cali en Tica y Upsidedown: fotos de producto, retratos y contenido listo para redes.",
     ],
     // Lista corta de lo que has hecho: "Categoría|Detalle"
     highlights: [
       "Fútbol|Zona Fut · Ascenso Total",
       "Baloncesto|LSBF Davivienda",
       "Marcas|Prime Supplements CR · Suministros PR · IPT · Upsidedown",
-      "Gastronomía|La Adelita",
+      "Gastronomía|La Adelita · Cali en Tica",
       "Equipo|Sony α7 II",
     ],
     stats: [
-      { value: 8, suffix: "+", label: "Marcas y clientes" },
+      { value: 9, suffix: "+", label: "Marcas y clientes" },
       { value: 2, suffix: "", label: "Deportes: fútbol y baloncesto" },
       { value: 2025, suffix: "", label: "Desde" },
     ],
@@ -102,6 +102,7 @@ window.SITE = {
     { name: "Suministros PR", type: "Marca", image: "assets/img/cliente-suministros-pr.jpg", fit: "cover", link: "" },
     { name: "IPT", type: "Marca", image: "assets/img/cliente-ipt.jpg", fit: "cover", link: "" },
     { name: "La Adelita", type: "Restaurante", image: "assets/img/cliente-la-adelita.jpg", fit: "cover", link: "" },
+    { name: "Cali en Tica", type: "Gastronomía", image: "assets/img/cliente-calientica.jpg", fit: "contain", link: "" },
     { name: "Upsidedown", type: "Marca", image: "assets/img/cliente-upsidedown.png", fit: "contain", link: "" },
   ],
 

@@ -2,14 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Mitchell Visuals</title>
-  <meta name="description" content="Mitchell Visuals — Fotografía y video. Portafolio, servicios y clientes." />
+  <meta name="description" content="Mitchell Visuals — fotógrafo en Costa Rica. Fotografía deportiva, retratos y marcas. Fútbol, baloncesto y contenido para redes." />
+  <meta name="author" content="Mitchell Visuals" />
   <meta name="theme-color" content="#0a0a0b" />
   <link rel="icon" type="image/png" href="assets/mark.png" />
-  <meta property="og:title" content="Mitchell Visuals" />
-  <meta property="og:description" content="Fotografía y video." />
-  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mitchell Visuals" />
+  <meta property="og:title" content="Mitchell Visuals — Fotografía en Costa Rica" />
+  <meta property="og:description" content="Fotografía deportiva, retratos y marcas. Cabra solo hay una." />
+  <meta property="og:image" content="assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/og.jpg" />
+  <link rel="apple-touch-icon" href="assets/icon-180.png" />
+  <link rel="preload" href="assets/goat-front.svg" as="image" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ProfessionalService","name":"Mitchell Visuals","description":"Fotografía deportiva, retratos y marcas en Costa Rica.","areaServed":"Costa Rica","email":"Mitchells_Visuals@outlook.com","telephone":"+506 7135-0454","image":"assets/og.jpg","sameAs":["https://instagram.com/Mitchells_Visuals","https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/"]}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Anton&display=swap" rel="stylesheet" />
@@ -23,11 +35,12 @@
       <filter id="boil"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1" /><feDisplacementMap in="SourceGraphic" scale="4" /></filter>
     </svg>
 
-    <div class="gate">
-      <img src="assets/logo.png" alt="" class="gate-logo" />
-      <p class="mono gate-sub">Fotografía — Video · Costa Rica</p>
-      <button class="gate-btn" type="button" data-enter>Entrar <span class="mono">♪ con sonido</span></button>
-      <button class="gate-mute mono" type="button" data-enter-mute>Entrar sin sonido</button>
+    <div class="opener">
+      <div class="op-face" role="img" aria-label="Cabra de Mitchell Visuals"></div>
+      <div class="op-text">
+        <p class="op-title mono">Mitchell Visuals</p>
+        <p class="op-line">Cabra solo hay una.</p>
+      </div>
     </div>
 
     <div class="film">
@@ -111,12 +124,14 @@
   <header class="nav">
     <a href="#top" class="nav-logo" aria-label="Inicio"><img src="assets/mark.png" alt="Mitchell Visuals" /></a>
     <nav class="nav-links">
+      <a href="#trabajo" class="nav-work">Trabajo</a>
       <a href="#equipo">Equipo</a>
       <a href="#sobre">Sobre mí</a>
       <a href="#servicios">Servicios</a>
       <a href="#clientes">Clientes</a>
       <a href="#portafolio">Portafolio</a>
       <a href="#contacto" class="nav-cta">Contacto</a>
+      <div class="nav-foot mono" id="nav-foot"></div>
     </nav>
     <button class="nav-burger" aria-label="Menú"><span></span><span></span></button>
   </header>
@@ -136,11 +151,24 @@
           <a class="btn btn-ghost magnetic" href="#contacto">Contacto</a>
         </div>
       </div>
+      <div class="hero-trust">
+        <span class="mono">Han confiado en mí</span>
+        <div class="trust-track"><div class="trust-row" id="trust-row"></div></div>
+      </div>
       <div class="hero-meta mono">
         <span>Est. 2025</span>
         <span class="scroll-hint">Scroll <i></i></span>
         <span id="clock">--:--:--</span>
       </div>
+    </section>
+
+    <!-- ================= TRABAJO SELECCIONADO ================= -->
+    <section class="section work" id="trabajo">
+      <div class="section-head">
+        <span class="mono idx">Trabajo seleccionado</span>
+        <h2 class="section-title" data-split>Trabajo</h2>
+      </div>
+      <div class="gallery" id="gallery"></div>
     </section>
 
     <!-- ================= EQUIPO ================= -->
@@ -206,12 +234,30 @@
   </main>
 
   <footer class="footer">
-    <img src="assets/logo.png" alt="Mitchell Visuals" class="footer-logo" />
-    <p class="mono">© <span id="year"></span> Mitchell Visuals</p>
+    <div class="f-cta">
+      <p class="mono">¿Tienes un proyecto en mente?</p>
+      <a href="#contacto" class="f-big">Hablemos <span>→</span></a>
+    </div>
+    <div class="f-cols" id="f-cols"></div>
+    <div class="f-bottom">
+      <img src="assets/logo.png" alt="Mitchell Visuals" class="footer-logo" loading="lazy" />
+      <p class="mono">© <span id="year"></span> Mitchell Visuals · Hecho en Costa Rica</p>
+      <a href="#top" class="to-top mono">Volver arriba ↑</a>
+    </div>
   </footer>
+
+  <!-- Lightbox + cursor -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close mono" type="button" aria-label="Cerrar">Cerrar ✕</button>
+    <button class="lb-prev" type="button" aria-label="Anterior">←</button>
+    <figure><img alt="" /><figcaption class="mono"></figcaption></figure>
+    <button class="lb-next" type="button" aria-label="Siguiente">→</button>
+  </div>
+  <div class="cursor-view mono" aria-hidden="true">Ver</div>
 
   <script src="assets/vendor/gsap.min.js"></script>
   <script src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="assets/vendor/lenis.min.js"></script>
   <script src="config.js"></script>
   <script src="main.js"></script>
   <script src="mascot.js"></script>

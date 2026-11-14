@@ -52,6 +52,27 @@
     .join("");
 
   $("#year").textContent = new Date().getFullYear();
+
+  // Franja "Han confiado en mí"
+  const trust = S.clients.map((c) => `<span>${esc(c.name)}</span>`).join("");
+  $("#trust-row").innerHTML = trust + trust;
+
+  // Galería (se muestra con 3+ fotos)
+  const G = S.gallery || [];
+  if (G.length >= 3) {
+    $("#gallery").innerHTML = G.map((g, i) => `<figure class="g-item" data-i="${i}"><img src="${esc(g.src)}" alt="${esc(g.title || "")}" loading="lazy" /><figcaption><span class="mono">${esc(g.cat || "")}</span>${esc(g.title || "")}</figcaption></figure>`).join("");
+  } else { $("#trabajo").remove(); const nw = $(".nav-work"); nw && nw.remove(); }
+
+  // Footer
+  const navLinks = [["#equipo", "Equipo"], ["#sobre", "Sobre mí"], ["#servicios", "Servicios"], ["#clientes", "Clientes"], ["#portafolio", "Portafolio"]];
+  const find = (l) => S.contact.find((c) => c.label.toLowerCase() === l) || null;
+  const col = (t, items) => `<div><span class="mono">${t}</span>${items.filter(Boolean).map(([h2, l, ext]) => `<a href="${esc(h2)}"${ext ? ' target="_blank" rel="noopener"' : ""}>${esc(l)}</a>`).join("")}</div>`;
+  const ig = find("instagram"), wa = find("whatsapp"), em = find("email"), pf = find("portafolio");
+  $("#f-cols").innerHTML =
+    col("Navegación", navLinks) +
+    col("Contacto", [wa && [wa.url, wa.value, 1], em && [em.url, em.value, 1]]) +
+    col("Redes", [ig && [ig.url, "Instagram", 1], pf && [pf.url, "Pixieset", 1]]);
+  $("#nav-foot").innerHTML = [ig && `<a href="${esc(ig.url)}" target="_blank" rel="noopener">Instagram</a>`, wa && `<a href="${esc(wa.url)}" target="_blank" rel="noopener">WhatsApp</a>`].filter(Boolean).join("");
   if (S.gear && S.gear.kit) {
     $("#kit-grid").innerHTML = S.gear.kit
       .map((g, i) => `<div class="kit-col"><span class="mono">${pad(i)} — ${esc(g.cat)}</span><ul>${g.items.map((it) => `<li>${esc(it)}</li>`).join("")}</ul></div>`)
@@ -77,6 +98,21 @@
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
+
+  /* Scroll suave (solo con mouse/trackpad; en celular se usa el scroll nativo) */
+  let lenis = null;
+  if (window.Lenis && matchMedia("(pointer: fine)").matches) {
+    lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href"); if (id.length < 2 && id !== "#") return;
+      const target = id === "#top" ? 0 : $(id); if (target === null) return;
+      e.preventDefault(); lenis.scrollTo(target, { offset: id === "#top" ? 0 : -20 });
+    }));
+    window.MV_LENIS = lenis;
+  }
 
   /* ================= HERO ================= */
   gsap.set(".hero-title .char", { yPercent: 105 });
@@ -155,4 +191,33 @@
       el.addEventListener("pointerleave", () => gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: "power3" }));
     });
   }
+})();
+
+/* ================= LIGHTBOX + CURSOR "VER" ================= */
+(() => {
+  const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+  const lb = $("#lightbox"); if (!lb) return;
+  const items = $$(".g-item"), img = lb.querySelector("img"), cap = lb.querySelector("figcaption");
+  let i = 0;
+  const show = (n) => { if (!items.length) return; i = (n + items.length) % items.length; const it = items[i]; img.src = it.querySelector("img").src; cap.textContent = it.querySelector("figcaption").textContent; };
+  const open = (n) => { show(n); lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); window.MV_LENIS && window.MV_LENIS.stop(); };
+  const close = () => { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); window.MV_LENIS && window.MV_LENIS.start(); };
+  items.forEach((it, n) => it.addEventListener("click", () => open(n)));
+  lb.querySelector(".lb-close").addEventListener("click", close);
+  lb.querySelector(".lb-prev").addEventListener("click", () => show(i - 1));
+  lb.querySelector(".lb-next").addEventListener("click", () => show(i + 1));
+  lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+  addEventListener("keydown", (e) => { if (!lb.classList.contains("open")) return; if (e.key === "Escape") close(); if (e.key === "ArrowRight") show(i + 1); if (e.key === "ArrowLeft") show(i - 1); });
+  let sx = 0; lb.addEventListener("touchstart", (e) => (sx = e.touches[0].clientX), { passive: true });
+  lb.addEventListener("touchend", (e) => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1)); });
+
+  const cv = $(".cursor-view");
+  if (!cv || !matchMedia("(hover: hover) and (pointer: fine)").matches || !window.gsap) return;
+  const qx = gsap.quickTo(cv, "x", { duration: 0.35, ease: "power3" }), qy = gsap.quickTo(cv, "y", { duration: 0.35, ease: "power3" });
+  addEventListener("pointermove", (e) => { qx(e.clientX); qy(e.clientY); });
+  document.addEventListener("pointerover", (e) => {
+    const t = e.target.closest(".g-item, a.portal");
+    cv.classList.toggle("on", !!t);
+    cv.textContent = t && t.classList.contains("portal") ? "Abrir" : "Ver";
+  });
 })();

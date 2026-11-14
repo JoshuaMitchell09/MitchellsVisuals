@@ -8,6 +8,9 @@ Todo el contenido está en **`config.js`**: textos, estadísticas, servicios, cl
 - Fotos → súbelas a `assets/img/` y pon la ruta en `config.js`, por ejemplo `photo: "assets/img/mitchell.jpg"`.
 - Clientes → cada uno tiene `name`, `type`, `image` y `link` (opcional).
 - Portafolio de video → cuando esté listo, pon el `url` y cambia `soon: false`.
+- Galería "Trabajo seleccionado" → sube fotos a `assets/img/trabajo/` y agrégalas en `gallery` (aparece con 3 o más).
+- Música → reemplaza `assets/audio/musica.mp3` (mismo nombre).
+- Frases de la cabra → `mascot` en `config.js`.
 
 Recomendado: fotos en `.jpg` o `.webp`, máximo ~2000px de ancho, para que cargue rápido.
 

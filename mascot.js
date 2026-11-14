@@ -18,19 +18,21 @@
   const isMobile = () => innerWidth < 820;
   // Posiciones por sección: x/y = punto de las patas (fracción de la pantalla), s = tamaño, face = 1 mira a la derecha / -1 izquierda
   const R = { x: 0.93, y: 0.96, s: 0.8, face: -1 }, L = { x: 0.07, y: 0.89, s: 0.8, face: 1 };
-  const MR = { x: 0.84, y: 0.97, s: 0.55, face: -1 }, ML = { x: 0.16, y: 0.92, s: 0.55, face: 1 };
+  const MR = { x: 0.87, y: 0.965, s: 0.44, face: -1 }, ML = { x: 0.7, y: 0.965, s: 0.44, face: -1 };
   const SPOTS = {
-    top:        { d: { x: 0.74, y: 0.62, s: 1.9, face: -1 }, m: { x: 0.7, y: 0.93, s: 0.95, face: -1 } },
+    trabajo:    { d: L, m: ML },
+    top:        { d: { x: 0.74, y: 0.62, s: 1.9, face: -1 }, m: { x: 0.78, y: 0.3, s: 0.62, face: -1 } },
     equipo:     { d: R, m: MR },
     sobre:      { d: L, m: ML },
     servicios:  { d: R, m: MR },
     clientes:   { d: L, m: ML },
     portafolio: { d: R, m: MR },
-    contacto:   { d: { x: 0.86, y: 0.8, s: 1.2, face: -1 }, m: MR },
+    contacto:   { d: R, m: MR },
   };
 
   const LINES = Object.assign({
     top: "¡Meeeeeeh! Bienvenido.",
+    trabajo: "Esto es lo que hago.",
     equipo: "Con esto hago la magia.",
     sobre: "Recuerda: cabra solo hay una.",
     servicios: "¿Qué necesitas? Yo me encargo.",

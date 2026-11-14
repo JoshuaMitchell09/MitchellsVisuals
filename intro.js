@@ -61,9 +61,22 @@
     window.MV_HERO_IN && window.MV_HERO_IN();
   };
 
+  /* La música intenta arrancar sola. Si el navegador lo bloquea (política de
+     autoplay), arranca con el primer toque, clic o tecla del visitante. */
+  function autoMusic() {
+    playMusic().then((ok) => {
+      if (ok) return;
+      soundBtn && soundBtn.classList.add("hint");
+      const go = () => { playMusic().then((ok2) => { if (ok2) { soundBtn && soundBtn.classList.remove("hint"); off(); } }); };
+      const evs = ["pointerdown", "keydown", "touchend"];
+      const off = () => evs.forEach((e) => removeEventListener(e, go, true));
+      evs.forEach((e) => addEventListener(e, go, true));
+    });
+  }
+  autoMusic();
+
   if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    $("[data-enter]").addEventListener("click", () => { playMusic(); intro.remove(); document.body.classList.remove("is-loading"); window.MV_HERO_IN && window.MV_HERO_IN(); });
-    $("[data-enter-mute]").addEventListener("click", () => { intro.remove(); document.body.classList.remove("is-loading"); window.MV_HERO_IN && window.MV_HERO_IN(); });
+    intro.remove(); document.body.classList.remove("is-loading"); window.MV_HERO_IN && window.MV_HERO_IN();
     return;
   }
 
@@ -192,20 +205,26 @@
     .add(flash(0.5), "<")
     .to("#intro", { clipPath: "circle(0% at 50% 50%)", duration: 0.7, ease: "steps(7)" }, "+=0.6");
 
-  /* ---------------- ARRANQUE ---------------- */
-  function start(withSound) {
-    if (withSound) playMusic();
+  /* ---------------- ARRANQUE ----------------
+     1) Cara de la cabra a pantalla completa (suave, cinematográfico)
+     2) Historia stop-motion  3) Página */
+  function startFilm() {
     gsap.ticker.fps(14); // stop-motion
-    gsap.to(".gate", { opacity: 0, duration: 0.3, ease: "steps(3)", onComplete: () => $(".gate").remove() });
+    $(".opener") && $(".opener").remove();
     gsap.set(".film", { visibility: "visible" });
     tl.play(0);
   }
-  $("[data-enter]").addEventListener("click", () => start(true));
-  $("[data-enter-mute]").addEventListener("click", () => start(false));
+  const op = gsap.timeline({ onComplete: startFilm, delay: 0.2 })
+    .fromTo(".op-face", { scale: 3.6, opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 1, ease: "power2.out" })
+    .to(".op-face", { scale: 1, duration: 2.4, ease: "expo.inOut" }, "-=0.35")
+    .fromTo(".op-face", { backgroundPosition: "110% 0%" }, { backgroundPosition: "-10% 0%", duration: 2.2, ease: "power2.inOut" }, "<0.4")
+    .fromTo(".op-text > *", { opacity: 0, y: 16 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: "power3.out" }, "-=0.7")
+    .to(".op-face", { scale: 0.92, opacity: 0, duration: 0.7, ease: "power3.in" }, "+=0.9")
+    .to(".op-text > *", { opacity: 0, y: -10, duration: 0.5, stagger: 0.05, ease: "power3.in" }, "<");
+
   $(".intro-skip").addEventListener("click", () => {
-    if ($(".gate")) { playMusic(); }
+    op.kill();
     tl.progress(1);
     done();
   });
-  gsap.from(".gate > *", { opacity: 0, y: 12, stagger: 0.12, duration: 0.8, ease: "steps(5)" });
 })();

@@ -34,10 +34,16 @@ window.SITE = {
     ],
   },
 
+  // Galería "Trabajo seleccionado". Pon tus mejores fotos en assets/img/trabajo/
+  // y agrégalas aquí. La sección aparece sola cuando hay 3 fotos o más.
+  // Ejemplo: { src: "assets/img/trabajo/gol.jpg", title: "Final de liga", cat: "Fútbol" },
+  gallery: [],
+
   // Lo que dice la cabra en cada sección (y al hacerle clic)
   mascot: {
     lines: {
       top: "¡Meeeeeeh! Bienvenido.",
+      trabajo: "Esto es lo que hago.",
       equipo: "Con esto hago la magia.",
       sobre: "Recuerda: cabra solo hay una.",
       servicios: "¿Qué necesitas? Yo me encargo.",

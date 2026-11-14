@@ -12,20 +12,82 @@
   <meta property="og:image" content="assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Anton&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="is-loading">
 
-  <!-- ================= INTRO ================= -->
+  <!-- ================= INTRO (stop-motion) ================= -->
   <div id="intro" aria-hidden="true">
-    <div class="intro-logo">
-      <img class="l-base" src="assets/logo.png" alt="" />
-      <span class="intro-scan"></span>
+    <svg width="0" height="0" style="position:absolute">
+      <filter id="boil"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1" /><feDisplacementMap in="SourceGraphic" scale="4" /></filter>
+    </svg>
+
+    <div class="gate">
+      <img src="assets/logo.png" alt="" class="gate-logo" />
+      <p class="mono gate-sub">Fotografía — Video · Costa Rica</p>
+      <button class="gate-btn" type="button" data-enter>Entrar <span class="mono">♪ con sonido</span></button>
+      <button class="gate-mute mono" type="button" data-enter-mute>Entrar sin sonido</button>
     </div>
-    <div class="intro-foot mono"><span>MITCHELL VISUALS</span><span><b id="intro-pct">000</b></span></div>
+
+    <div class="film">
+      <div class="cam">
+        <div class="s2d">
+          <svg class="props" viewBox="0 0 1000 800" width="1000" height="800">
+            <g class="floor"><line x1="20" y1="640" x2="980" y2="640" /></g>
+            <g class="goal">
+              <path data-draw d="M780 640 V480 H940 V640 M780 480 L810 455 H960 L940 480 M960 455 V615 L940 640" />
+              <g class="net-g">
+                <path d="M800 480 V640 M820 480 V640 M840 480 V640 M860 480 V640 M880 480 V640 M900 480 V640 M920 480 V640 M780 505 H940 M780 530 H940 M780 555 H940 M780 580 H940 M780 605 H940" class="thin" />
+              </g>
+            </g>
+            <g class="ball">
+              <circle cx="440" cy="622" r="18" />
+              <path d="M440 612 l8 6 -3 9 h-10 l-3 -9 z M440 604 V612 M448 618 l9 -3 M445 627 l5 8 M435 627 l-5 8 M432 618 l-9 -3" class="thin" />
+            </g>
+            <g class="three">
+              <path data-draw d="M470 640 Q 560 612 650 640" class="dash" />
+              <text x="530" y="668" class="lbl">3PT</text>
+            </g>
+            <g class="hoop">
+              <path data-draw d="M955 640 V300 H935 M932 225 V365 M932 330 H860" />
+              <g class="net-b"><path d="M862 330 L874 385 M876 330 L882 385 M890 330 L890 385 M904 330 L898 385 M918 330 L906 385 M868 345 H912 M872 365 H908" class="thin" /></g>
+            </g>
+            <g class="bball">
+              <circle cx="520" cy="345" r="20" />
+              <path d="M500 345 H540 M520 325 V365 M506 331 Q 520 345 506 359 M534 331 Q 520 345 534 359" class="thin" />
+            </g>
+          </svg>
+          <img class="g-ground" src="assets/intro/goat-ground.png" alt="" />
+          <div class="goat">
+            <img class="g-leg" src="assets/intro/goat-leg.png" alt="" />
+            <img class="g-body" src="assets/intro/goat-body.png" alt="" />
+            <img class="g-head" src="assets/intro/goat-head.png" alt="" />
+            <img class="g-arm" src="assets/intro/goat-arm.png" alt="" />
+          </div>
+          <div class="polaroid"><span class="mono">Mitchell Visuals — 2025</span></div>
+          <img class="final-logo" src="assets/logo.png" alt="" />
+          <div id="stamp" class="stamp"></div>
+        </div>
+      </div>
+      <div class="letterbox top"></div><div class="letterbox bottom"></div>
+      <div class="hud mono">
+        <span class="rec"><i></i> REC <b id="tc">00:00:00:00</b></span>
+        <span id="scene">ESC 00</span>
+        <span class="hud-bl">MV — 4K RAW</span>
+      </div>
+      <div class="scratch"></div><div class="scratch"></div><div class="scratch"></div>
+      <div class="grain-film"></div>
+      <div class="vignette"></div>
+      <div class="flash"></div>
+      <div class="blackout"></div>
+    </div>
     <button class="intro-skip mono" type="button">Saltar</button>
   </div>
+
+  <audio id="music" src="assets/audio/musica.mp3" loop preload="auto"></audio>
+  <button class="sound mono" type="button" aria-label="Reproducir música"><b><i></i><i></i><i></i><i></i><i></i></b><span>Sonido off</span></button>
+  <div class="grain"></div>
 
   <canvas id="stage" aria-hidden="true"></canvas>
   <div id="tags" aria-hidden="true"></div>
@@ -152,5 +214,6 @@
   <script src="config.js"></script>
   <script src="stage.js"></script>
   <script src="main.js"></script>
+  <script src="intro.js"></script>
 </body>
 </html>

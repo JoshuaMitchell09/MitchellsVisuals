@@ -29,6 +29,8 @@ index.html      estructura de la página
 styles.css      estilos
 main.js         animaciones e interacciones
 stage.js        cámara 3D (Sony α7 II) que se arma/desarma con el scroll
+intro.js        intro stop-motion de la cabra + música
+assets/audio/   musica.mp3 (reemplázalo para cambiar la canción)
 config.js       ← tu contenido
 assets/         logo, fotos y librerías (GSAP, Three.js)
 ```

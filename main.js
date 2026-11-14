@@ -73,47 +73,22 @@
 
   /* ================= SIN GSAP ================= */
   if (!window.gsap || reduced) {
-    $("#intro").remove();
-    document.body.classList.remove("is-loading");
-    window.STAGE && STAGE.assemble();
+    window.MV_HERO_IN = () => window.STAGE && STAGE.assemble();
     $$("[data-count]").forEach((b) => (b.textContent = b.dataset.count + b.dataset.suffix));
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
-
-  /* ================= INTRO ================= */
-  const pct = $("#intro-pct"), counter = { v: 0 };
-  const intro = gsap.timeline({ onComplete: finishIntro, defaults: { ease: "power3.inOut" } });
-  intro
-    .from(".intro-foot, .intro-skip", { opacity: 0, duration: 0.6 })
-    .to(counter, { v: 100, duration: 2.4, ease: "power2.inOut", onUpdate: () => (pct.textContent = String(Math.round(counter.v)).padStart(3, "0")) }, 0.1)
-    .set(".intro-scan", { opacity: 1 }, 0.3)
-    .to(".intro-scan", { top: "0%", duration: 2.1 }, 0.3)
-    .to(".l-base", { clipPath: "inset(0% 0 0 0)", duration: 2.1 }, 0.3)
-    .to(".intro-scan", { opacity: 0, duration: 0.3 })
-    .to(".intro-logo", { scale: 0.92, opacity: 0, duration: 0.8, ease: "power3.in" }, "+=0.35")
-    .to(".intro-foot, .intro-skip", { opacity: 0, duration: 0.4 }, "<")
-    .to("#intro", { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, "-=0.2");
-
-  let done = false;
-  function finishIntro() {
-    if (done) return;
-    done = true;
-    $("#intro").remove();
-    document.body.classList.remove("is-loading");
-    heroIn();
-  }
-  $(".intro-skip").addEventListener("click", () => intro.progress(1));
 
   /* ================= HERO ================= */
   gsap.set(".hero-title .char", { yPercent: 105 });
   gsap.set(".hero .reveal-up", { y: 20, opacity: 0 });
   gsap.set(".nav, .hero-meta", { opacity: 0 });
 
+  window.MV_HERO_IN = heroIn;
   function heroIn() {
     window.STAGE && STAGE.assemble();
     gsap.timeline({ defaults: { ease: "expo.out" } })
-      .to(".hero-title .char", { yPercent: 0, duration: 1.4, stagger: 0.035 })
+      .to(".hero-title .char", { yPercent: 0, duration: 0.5, ease: "steps(4)", stagger: { each: 0.05, from: "random" } })
       .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 }, 0.35)
       .to(".nav, .hero-meta", { opacity: 1, duration: 1.2 }, 0.6);
     ScrollTrigger.refresh();
@@ -134,8 +109,21 @@
     gsap.from(targets, { y: 40, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.08, scrollTrigger: { trigger, start: "top 85%" }, ...extra });
 
   $$(".section-title, .contact-title [data-split]").forEach((el) =>
-    gsap.from(el.querySelectorAll(".char"), { yPercent: 105, duration: 1.2, stagger: 0.025, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } })
+    gsap.from(el.querySelectorAll(".char"), {
+      opacity: 0, yPercent: () => gsap.utils.random(-40, 40), rotate: () => gsap.utils.random(-14, 14),
+      duration: 0.45, ease: "steps(3)", stagger: { each: 0.045, from: "random" },
+      scrollTrigger: { trigger: el, start: "top 88%" },
+    })
   );
+  // Fotos: se "revelan" como una exposición (sobreexpuesta → normal, a saltos)
+  const expose = (targets, trigger) =>
+    gsap.fromTo(targets, { filter: "brightness(3.2) contrast(0.5) blur(8px)" }, {
+      filter: "brightness(1) contrast(1) blur(0px)", duration: 0.9, ease: "steps(7)", stagger: 0.08,
+      scrollTrigger: { trigger, start: "top 82%" }, clearProps: "filter",
+    });
+  expose(".about-photo .frame img:not(.alt)", ".about");
+  expose(".client img", ".clients-grid");
+  expose(".portal .bg img", ".portals");
   $$(".section-head .idx, .gear-head .idx").forEach((el) => up(el, el));
 
   // Sobre mí

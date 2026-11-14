@@ -318,7 +318,8 @@
 
     const base = Math.min(H * 0.042, W * 0.055);
     const ex = cur.explode + intro.explode;
-    rig.scale.setScalar(base * cur.s * intro.s);
+    const beat = (window.AUDIO && window.AUDIO.bass) || 0;
+    rig.scale.setScalar(base * cur.s * intro.s * (1 + beat * 0.05));
     rig.position.set(cur.px * W * 0.5, cur.py * H * 0.5 + Math.sin(t * 0.9) * 0.12, 0);
     rig.rotation.y = cur.rotY + intro.spin + Math.sin(t * 0.4) * 0.12 + mx * 0.35;
     rig.rotation.x = cur.rotX + Math.sin(t * 0.6) * 0.05 + my * 0.2;
@@ -344,7 +345,7 @@
     elements.forEach((p, i) => (p.g.children[0].rotation.z = t * (0.2 + i * 0.05)));
 
     // obturador / flash periódico
-    if (t > nextShot) { flash = 1; nextShot = t + 6 + Math.random() * 3; }
+    if (t > nextShot || (beat > 0.82 && t > nextShot - 4)) { flash = 1; nextShot = t + 6 + Math.random() * 3; }
     flash *= 0.9;
     flashLight.intensity = flash * 120;
     v3.set(MX, MY, 10); model.localToWorld(v3); flashLight.position.copy(v3);

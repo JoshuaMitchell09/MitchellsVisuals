@@ -32,9 +32,9 @@
     m.position.set(...pos); m.lookAt(0, 0, 0); env.add(m);
   };
   panel(0xffffff, 3.2, 14, 6, [0, 16, 6]);
-  panel(0x00f0ff, 4, 4, 18, [-16, 2, 4]);
-  panel(0xff2bd6, 3.5, 4, 18, [16, 0, 2]);
-  panel(0x8b5cff, 2.5, 20, 4, [0, -14, -6]);
+  panel(0xdfe9f0, 2.6, 4, 18, [-16, 2, 4]);
+  panel(0xffffff, 2.2, 4, 18, [16, 0, 2]);
+  panel(0x50555c, 2, 20, 4, [0, -14, -6]);
   scene.environment = pmrem.fromScene(env, 0.035).texture;
 
   /* ---------- Materials ---------- */
@@ -52,10 +52,10 @@
     dark: new THREE.MeshStandardMaterial({ color: 0x24262c, roughness: 0.35, metalness: 0.9 }),
     black: new THREE.MeshStandardMaterial({ color: 0x050506, roughness: 0.6, metalness: 0.2 }),
     glass: new THREE.MeshPhysicalMaterial({ color: 0x0b1a3a, roughness: 0.03, metalness: 0.1, clearcoat: 1, iridescence: 1, iridescenceIOR: 1.6, envMapIntensity: 2.4 }),
-    lensEl: new THREE.MeshPhysicalMaterial({ color: 0x7fe9ff, roughness: 0.05, metalness: 0, transparent: true, opacity: 0.38, iridescence: 1, envMapIntensity: 2, side: THREE.DoubleSide, depthWrite: false }),
+    lensEl: new THREE.MeshPhysicalMaterial({ color: 0xdfefff, roughness: 0.05, metalness: 0, transparent: true, opacity: 0.38, iridescence: 1, envMapIntensity: 2, side: THREE.DoubleSide, depthWrite: false }),
     sensor: new THREE.MeshPhysicalMaterial({ color: 0x29406e, roughness: 0.12, metalness: 1, iridescence: 1, iridescenceIOR: 2.0, iridescenceThicknessRange: [200, 900] }),
-    cyan: new THREE.MeshBasicMaterial({ color: new THREE.Color(0x00f0ff).multiplyScalar(1.6), toneMapped: false }),
-    mag: new THREE.MeshBasicMaterial({ color: new THREE.Color(0xff2bd6).multiplyScalar(1.6), toneMapped: false }),
+    cyan: new THREE.MeshBasicMaterial({ color: new THREE.Color(0x7cf3ff).multiplyScalar(0.9), toneMapped: false }),
+    mag: new THREE.MeshBasicMaterial({ color: new THREE.Color(0xffffff).multiplyScalar(0.55), toneMapped: false }),
   };
   const pcbTex = tex(512, 320, (g, w, h) => {
     g.fillStyle = "#06261d"; g.fillRect(0, 0, w, h);
@@ -146,7 +146,11 @@
   const shutter = mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.28, 32), M.metal, -4.75, 3.62, 2.1);
   const onRing = mesh(new THREE.CylinderGeometry(0.78, 0.78, 0.18, 32), M.black, -4.75, 3.5, 2.1);
   const dialRing = mesh(new THREE.TorusGeometry(0.96, 0.03, 8, 48), M.cyan, -2.8, 4.08, -0.4); dialRing.rotation.x = Math.PI / 2;
-  part("dials", [dialMode, dialExp, shutter, onRing, dialRing], [-0.5, 7.2, 0.3], [0.4, 0, -0.3], 0.1, [-3.6, 4.1, 0]);
+  const frontWheel = mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.32, 24), dialMode.material, -4.6, 3.3, 2.75);
+  const c1 = mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.16, 20), M.dark, -3.55, 3.58, 1.2);
+  const c2 = mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.16, 20), M.dark, -2.75, 3.58, 1.35);
+  const afLamp = mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 20), new THREE.MeshStandardMaterial({ color: 0x2a1408, emissive: 0xff7a2a, emissiveIntensity: 0.25 }), -3.0, 2.45, 1.62); afLamp.rotation.x = Math.PI / 2;
+  part("dials", [dialMode, dialExp, shutter, onRing, dialRing, frontWheel, c1, c2, afLamp], [-0.5, 7.2, 0.3], [0.4, 0, -0.3], 0.1, [-3.6, 4.1, 0]);
 
   // Pantalla trasera
   const screenBody = mesh(rbox(7.6, 4.9, 0.4, 0.3, 0.08), M.black, 0.9, -0.4, -1.8);
@@ -220,27 +224,27 @@
 
   /* ---------- Halo + partículas ---------- */
   const halo = new THREE.Group(); scene.add(halo);
-  const ringMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false });
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending, depthWrite: false });
   const ringMat2 = ringMat.clone(); ringMat2.color.set(0xff2bd6); ringMat2.opacity = 0.25;
   const r1 = new THREE.Mesh(new THREE.TorusGeometry(9, 0.03, 8, 160), ringMat), r2 = new THREE.Mesh(new THREE.TorusGeometry(10.5, 0.02, 8, 160), ringMat2);
   const r3 = new THREE.Mesh(new THREE.TorusGeometry(7.6, 0.015, 8, 160), ringMat.clone());
-  halo.add(r1, r2, r3);
-  const N = 900, pg = new THREE.BufferGeometry(), pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
-  const pal = [new THREE.Color(0x00f0ff), new THREE.Color(0x8b5cff), new THREE.Color(0xff2bd6), new THREE.Color(0xffffff)];
+  halo.add(r1);
+  const N = 260, pg = new THREE.BufferGeometry(), pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+  const pal = [new THREE.Color(0xffffff), new THREE.Color(0x9a9aa0), new THREE.Color(0xcfd6dc), new THREE.Color(0x7cf3ff)];
   for (let i = 0; i < N; i++) {
     const r = 8 + Math.random() * 40, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
     pos.set([r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th) * 0.6, r * Math.cos(ph) - 15], i * 3);
     col.set(pal[i % 4].toArray(), i * 3);
   }
   pg.setAttribute("position", new THREE.BufferAttribute(pos, 3)); pg.setAttribute("color", new THREE.BufferAttribute(col, 3));
-  const dust = new THREE.Points(pg, new THREE.PointsMaterial({ size: 0.09, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const dust = new THREE.Points(pg, new THREE.PointsMaterial({ size: 0.06, vertexColors: true, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false }));
   scene.add(dust);
 
   /* ---------- Luces ---------- */
   scene.add(new THREE.AmbientLight(0xffffff, 0.15));
   const key = new THREE.DirectionalLight(0xffffff, 1.1); key.position.set(5, 8, 10); scene.add(key);
-  const lc = new THREE.PointLight(0x00f0ff, 60, 40); scene.add(lc);
-  const lm = new THREE.PointLight(0xff2bd6, 50, 40); scene.add(lm);
+  const lc = new THREE.PointLight(0xcfefff, 35, 40); scene.add(lc);
+  const lm = new THREE.PointLight(0xffffff, 25, 40); scene.add(lm);
   const flashLight = new THREE.PointLight(0xffffff, 0, 30); scene.add(flashLight);
 
   /* ---------- Estado (lo controla el scroll) ---------- */
@@ -267,8 +271,8 @@
     k(topOf("#clientes") - vh * 0.3, { px: 0, py: 0, s: 1.05, rotY: 6.3 + 2.2, rotX: 0.55, explode: 1.4, dim: 0.28, labels: 0 });
     k(topOf("#portafolio") - vh * 0.45, { px: 0, py: 0, s: 1, rotY: Math.PI * 4, rotX: 0, explode: 0, dim: 0.85, labels: 0 });
     k(topOf("#portafolio") + vh * 0.05, { px: 0, py: 0.05, s: 6.5, rotY: Math.PI * 4, rotX: 0, explode: 0, dim: 0.2, labels: 0 });
-    k(topOf("#contacto") - vh * 0.3, { px: 0, py: m ? 0.3 : 0.08, s: m ? 0.55 : 0.85, rotY: Math.PI * 4 - 0.6, rotX: 0.2, explode: 0, dim: 0.5, labels: 0 });
-    k(document.documentElement.scrollHeight, { px: 0, py: 0.08, s: 0.85, rotY: Math.PI * 4 + 0.6, rotX: 0.2, explode: 0.15, dim: 0.5, labels: 0 });
+    k(topOf("#contacto") - vh * 0.3, { px: 0, py: m ? 0.3 : 0.12, s: m ? 0.45 : 0.55, rotY: Math.PI * 4 - 0.6, rotX: 0.2, explode: 0, dim: 0.22, labels: 0 });
+    k(document.documentElement.scrollHeight, { px: 0, py: 0.12, s: 0.55, rotY: Math.PI * 4 + 0.6, rotX: 0.2, explode: 0.15, dim: 0.22, labels: 0 });
   }
   const ease = (t) => t * t * (3 - 2 * t);
   function target(y) {
@@ -342,7 +346,7 @@
     // obturador / flash periódico
     if (t > nextShot) { flash = 1; nextShot = t + 6 + Math.random() * 3; }
     flash *= 0.9;
-    flashLight.intensity = flash * 220;
+    flashLight.intensity = flash * 120;
     v3.set(MX, MY, 10); model.localToWorld(v3); flashLight.position.copy(v3);
 
     lc.position.set(Math.cos(t * 0.6) * 12, 4 + Math.sin(t * 0.8) * 3, 8);

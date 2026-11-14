@@ -7,7 +7,7 @@ window.SITE = {
   hero: {
     // Foto grande en la portada (déjala "" para no mostrar ninguna)
     photo: "",
-    subtitle: "Capturo momentos con estética de otro tiempo: luz, movimiento y emoción convertidos en imágenes que se sienten del futuro.",
+    subtitle: "Fotografía deportiva, retratos y marcas desde Costa Rica. El instante exacto, con carácter.",
   },
 
   // Sección "Mi equipo": la cámara 3D se desarma y muestra estas etiquetas.
@@ -25,6 +25,13 @@ window.SITE = {
       ibis: "Estabilización 5 ejes|SteadyShot INSIDE",
       dials: "Control manual|Diales dedicados",
     },
+    // Lista de todo tu equipo (aparece debajo de la cámara 3D)
+    kit: [
+      { cat: "Cámaras", items: ["Sony α7 II", "Sony α7R"] },
+      { cat: "Lentes", items: ["Sigma 100-400 mm", "16-50 mm"] },
+      { cat: "Audio", items: ["Micrófono DJI Mini 2", "Micrófono DJI 3"] },
+      { cat: "Estabilización", items: ["Estabilizador / gimbal"] },
+    ],
   },
 
   about: {
@@ -33,22 +40,35 @@ window.SITE = {
     // Segunda foto que aparece al pasar el mouse / tocar la foto
     photoHover: "assets/img/mitchell-2.jpg",
     tag: "MITCHELL",
-    lead: "Soy Mitchell, fotógrafo y creador visual.",
-    body: "Me apasiona contar historias a través de la imagen. Trabajo con marcas, artistas y personas que buscan un look distinto, con energía, cuidado en cada detalle y una dirección visual que se recuerda.",
+    lead: "Soy Mitchell, fotógrafo de Costa Rica enfocado en el deporte, las marcas y las personas.",
+    // Cada texto entre comillas es un párrafo
+    body: [
+      "Desde 2025 trabajo bajo el nombre Mitchell Visuals, buscando imágenes con carácter: luz contrastada, color con intención y el momento exacto en que pasa algo.",
+      "Mi base es la fotografía deportiva. He cubierto fútbol para medios como Zona Fut y Ascenso Total —el fútbol que no ves— y baloncesto con la LSBF Davivienda. En la cancha aprendí a anticipar la jugada y a no perder el instante.",
+      "Ese mismo ojo lo llevo a marcas y negocios como Prime Supplements CR, Suministros PR, IPT, La Adelita y Upsidedown: fotos de producto, retratos y contenido listo para redes.",
+    ],
+    // Lista corta de lo que has hecho: "Categoría|Detalle"
+    highlights: [
+      "Fútbol|Zona Fut · Ascenso Total",
+      "Baloncesto|LSBF Davivienda",
+      "Marcas|Prime Supplements CR · Suministros PR · IPT · Upsidedown",
+      "Gastronomía|La Adelita",
+      "Equipo|Sony α7 II",
+    ],
     stats: [
-      { value: 50, suffix: "+", label: "Proyectos" },
-      { value: 30, suffix: "+", label: "Clientes" },
-      { value: 10, suffix: "K+", label: "Fotos entregadas" },
+      { value: 8, suffix: "+", label: "Marcas y clientes" },
+      { value: 2, suffix: "", label: "Deportes: fútbol y baloncesto" },
+      { value: 2025, suffix: "", label: "Desde" },
     ],
   },
 
   services: [
-    { title: "Retratos", desc: "Sesiones personales y profesionales con dirección de pose, luz y estilo.", icon: "portrait" },
-    { title: "Eventos", desc: "Cobertura completa de eventos sociales, corporativos y conciertos.", icon: "event" },
-    { title: "Producto & Marca", desc: "Fotografía comercial para catálogos, e-commerce y redes sociales.", icon: "product" },
-    { title: "Deportes & Acción", desc: "Movimiento congelado en el instante exacto. Alta velocidad, alto impacto.", icon: "action" },
-    { title: "Contenido para redes", desc: "Paquetes de foto y video vertical listos para Instagram y TikTok.", icon: "social" },
-    { title: "Video", desc: "Próximamente: reels, videoclips y piezas audiovisuales.", icon: "video" },
+    { title: "Deportes", desc: "Fútbol, baloncesto y acción en vivo. Cobertura de partidos, atletas y eventos deportivos." },
+    { title: "Retratos", desc: "Sesiones personales y profesionales con dirección de pose, luz y estilo." },
+    { title: "Marcas & producto", desc: "Fotografía comercial para negocios, catálogos, e-commerce y redes sociales." },
+    { title: "Eventos", desc: "Cobertura de eventos sociales, corporativos y lanzamientos." },
+    { title: "Contenido para redes", desc: "Fotos listas para Instagram y TikTok, pensadas para tu marca." },
+    { title: "Video", desc: "Próximamente: reels, videoclips y piezas audiovisuales." },
   ],
 
   // Clientes: pon el logo/foto en assets/img/ y su ruta en "image".
@@ -73,9 +93,9 @@ window.SITE = {
   ],
 
   contact: [
-    { label: "Instagram", value: "@mitchellvisuals", url: "https://instagram.com/" },
-    { label: "WhatsApp", value: "Escríbeme", url: "https://wa.me/" },
-    { label: "Email", value: "hola@mitchellvisuals.com", url: "mailto:hola@mitchellvisuals.com" },
+    { label: "WhatsApp", value: "+506 7135-0454", url: "https://wa.me/50671350454" },
+    { label: "Email", value: "Mitchells_Visuals@outlook.com", url: "mailto:Mitchells_Visuals@outlook.com" },
+    { label: "Portafolio", value: "Ver en Pixieset", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/" },
   ],
 
   marquee: ["Fotografía", "Retratos", "Eventos", "Marcas", "Deportes", "Video", "Dirección visual"],

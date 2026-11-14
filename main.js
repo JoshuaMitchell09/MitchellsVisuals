@@ -99,20 +99,7 @@
   }
   gsap.registerPlugin(ScrollTrigger);
 
-  /* Scroll suave (solo con mouse/trackpad; en celular se usa el scroll nativo) */
-  let lenis = null;
-  if (window.Lenis && matchMedia("(pointer: fine)").matches) {
-    lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((t) => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-    $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
-      const id = a.getAttribute("href"); if (id.length < 2 && id !== "#") return;
-      const target = id === "#top" ? 0 : $(id); if (target === null) return;
-      e.preventDefault(); lenis.scrollTo(target, { offset: id === "#top" ? 0 : -20 });
-    }));
-    window.MV_LENIS = lenis;
-  }
+
 
   /* ================= HERO ================= */
   gsap.set(".hero-title .char", { yPercent: 105 });

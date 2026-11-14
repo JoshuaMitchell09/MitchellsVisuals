@@ -85,7 +85,10 @@
     <button class="intro-skip mono" type="button">Saltar</button>
   </div>
 
-  <audio id="music" src="assets/audio/musica.mp3" loop preload="auto"></audio>
+  <audio id="music" loop preload="auto" playsinline>
+    <source src="assets/audio/musica.mp3" type="audio/mpeg" />
+    <source src="assets/audio/EsDeeKid%20-%20Mist%20(EXTENDED%20INTRO)%20%5Bprod.%20N0ID%5D.mp4" type="audio/mp4" />
+  </audio>
   <button class="sound mono" type="button" aria-label="Reproducir música"><b><i></i><i></i><i></i><i></i><i></i></b><span>Sonido off</span></button>
   <div class="grain"></div>
 

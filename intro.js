@@ -10,58 +10,44 @@
   const audio = $("#music");
   window.AUDIO = { level: 0, bass: 0, playing: false };
 
-  /* ---------------- AUDIO ---------------- */
-  let ctx, analyser, data;
-  function setupAnalyser() {
-    if (ctx || !audio) return;
-    try {
-      ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const src = ctx.createMediaElementSource(audio);
-      analyser = ctx.createAnalyser(); analyser.fftSize = 256; analyser.smoothingTimeConstant = 0.75;
-      src.connect(analyser); analyser.connect(ctx.destination);
-      data = new Uint8Array(analyser.frequencyBinCount);
-    } catch (e) { ctx = null; }
-  }
+  /* ---------------- AUDIO ----------------
+     La música suena directo desde <audio> (sin Web Audio) para que
+     funcione en todos los navegadores, incluido iPhone/Safari.
+     Las barras y el "latido" de la cámara se simulan al ritmo. */
+  const BPM = 140;
   function playMusic() {
-    if (!audio) return;
-    setupAnalyser();
-    ctx && ctx.resume && ctx.resume();
-    audio.volume = 0;
+    if (!audio) return Promise.resolve(false);
+    audio.muted = false;
+    audio.volume = 0.8;
     const p = audio.play();
-    p && p.catch(() => {});
-    if (window.gsap) gsap.to(audio, { volume: 0.7, duration: 2.5, ease: "power1.out" }); else audio.volume = 0.7;
+    return p && p.then ? p.then(() => true).catch((e) => { console.warn("No se pudo reproducir la música:", e); syncBtn(); return false; }) : Promise.resolve(true);
   }
   const soundBtn = $(".sound");
   function syncBtn() {
     const on = audio && !audio.paused;
     window.AUDIO.playing = on;
-    soundBtn && soundBtn.classList.toggle("on", on);
-    soundBtn && soundBtn.setAttribute("aria-label", on ? "Pausar música" : "Reproducir música");
-    soundBtn && (soundBtn.querySelector("span").textContent = on ? "Sonido on" : "Sonido off");
+    if (!soundBtn) return;
+    soundBtn.classList.toggle("on", on);
+    soundBtn.setAttribute("aria-label", on ? "Pausar música" : "Reproducir música");
+    soundBtn.querySelector("span").textContent = audio && audio.dataset.err ? "Sin audio" : on ? "Sonido on" : "Sonido off";
   }
-  if (audio) { audio.addEventListener("play", syncBtn); audio.addEventListener("pause", syncBtn); }
-  soundBtn && soundBtn.addEventListener("click", () => {
-    if (audio.paused) playMusic();
-    else if (window.gsap) gsap.to(audio, { volume: 0, duration: 0.5, onComplete: () => audio.pause() });
-    else audio.pause();
-  });
+  if (audio) {
+    ["play", "playing", "pause", "ended"].forEach((ev) => audio.addEventListener(ev, syncBtn));
+    audio.addEventListener("error", () => { audio.dataset.err = "1"; console.warn("No se encontró el archivo de música"); syncBtn(); }, true);
+  }
+  soundBtn && soundBtn.addEventListener("click", () => { if (audio.paused) playMusic(); else audio.pause(); });
   const bars = $$(".sound i");
   (function meter() {
     requestAnimationFrame(meter);
-    let lvl = 0, bass = 0;
-    if (analyser && audio && !audio.paused) {
-      analyser.getByteFrequencyData(data);
-      for (let i = 0; i < 6; i++) bass += data[i];
-      bass /= 6 * 255;
-      for (let i = 0; i < 48; i++) lvl += data[i];
-      lvl /= 48 * 255;
-      bars.forEach((b, i) => (b.style.transform = `scaleY(${0.15 + (data[2 + i * 7] / 255) * 0.85})`));
-    } else if (audio && !audio.paused) {
-      const t = performance.now() / 1000; // sin analizador: animación simulada
-      bars.forEach((b, i) => (b.style.transform = `scaleY(${0.3 + Math.abs(Math.sin(t * 3 + i)) * 0.6})`));
+    const playing = audio && !audio.paused;
+    let bass = 0;
+    if (playing) {
+      const t = audio.currentTime, ph = ((t * BPM) / 60) % 1;
+      bass = Math.pow(1 - ph, 3);
+      bars.forEach((b, i) => (b.style.transform = `scaleY(${(0.2 + Math.abs(Math.sin(t * (2.3 + i * 0.7) + i)) * 0.5 + bass * 0.3).toFixed(3)})`));
     } else bars.forEach((b) => (b.style.transform = "scaleY(.15)"));
-    window.AUDIO.level += (lvl - window.AUDIO.level) * 0.3;
-    window.AUDIO.bass += (bass - window.AUDIO.bass) * 0.4;
+    window.AUDIO.bass += (bass * 0.9 - window.AUDIO.bass) * 0.4;
+    window.AUDIO.level = window.AUDIO.bass;
   })();
 
   if (!intro) return;

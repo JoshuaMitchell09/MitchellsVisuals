@@ -20,7 +20,12 @@
   $("#about-lead").textContent = S.about.lead;
   $("#about-body").textContent = S.about.body;
   $("#about-tag").textContent = S.about.tag;
-  $("#about-photo").innerHTML = img(S.about.photo, "Mitchell", "TU FOTO AQUÍ<br/>assets/img/");
+  $("#about-photo").innerHTML = img(S.about.photo, "Mitchell", "TU FOTO AQUÍ<br/>assets/img/") +
+    (S.about.photo && S.about.photoHover ? `<img class="alt" src="${esc(S.about.photoHover)}" alt="" loading="lazy" />` : "");
+  if (S.hero.photo) {
+    $("#hero-portrait").innerHTML = `<img class="hp-main" src="${esc(S.hero.photo)}" alt="Mitchell" /><img class="hp-cyan" src="${esc(S.hero.photo)}" alt="" /><img class="hp-mag" src="${esc(S.hero.photo)}" alt="" /><span class="hp-scan"></span>`;
+  } else $("#hero-portrait").remove();
+  $(".about-photo").addEventListener("click", () => $(".about-photo").classList.toggle("swap"));
   $("#stats").innerHTML = S.about.stats
     .map((s) => `<div class="stat"><b data-count="${s.value}" data-suffix="${esc(s.suffix)}">0${esc(s.suffix)}</b><span>${esc(s.label)}</span></div>`)
     .join("");
@@ -35,7 +40,8 @@
     .map((c) => {
       const tag = c.link ? "a" : "div";
       const href = c.link ? ` href="${esc(c.link)}" target="_blank" rel="noopener"` : "";
-      return `<${tag} class="client"${href}>${img(c.image, c.name, "FOTO DEL CLIENTE")}<span class="scan"></span>
+      const fit = c.fit === "contain" ? " contain" : "";
+      return `<${tag} class="client${fit}"${href}>${c.image ? img(c.image, c.name) : `<div class="ph client-ph"><b>${esc(c.name)}</b></div>`}<span class="scan"></span>
         <div class="info"><span class="mono">${esc(c.type)}</span><h4>${esc(c.name)}</h4></div></${tag}>`;
     })
     .join("");
@@ -185,7 +191,10 @@
       .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.1, stagger: 0.12 }, 0.4)
       .to(".nav", { y: 0, opacity: 1, duration: 1 }, 0.5)
       .to(".hero-meta", { opacity: 1, duration: 1 }, 0.9)
-      .from("#hero-canvas", { opacity: 0, duration: 2 }, 0);
+      .from("#hero-canvas", { opacity: 0, duration: 2 }, 0)
+      .from(".hero-portrait", { clipPath: "inset(0 0 0 100%)", duration: 1.6, ease: "expo.inOut" }, 0.1)
+      .from(".hp-main", { scale: 1.25, duration: 2.2, ease: "expo.out" }, 0.1)
+      .add(() => $(".hero-portrait")?.classList.add("live"), 1.2);
     ScrollTrigger.refresh();
   }
 
@@ -239,6 +248,11 @@
   }
   drawHero();
 
+  if ($(".hero-portrait")) {
+    gsap.to(".hero-portrait", { yPercent: 18, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+    const px = gsap.quickTo(".hp-main", "x", { duration: 1, ease: "power3" });
+    addEventListener("pointermove", (e) => px((e.clientX / innerWidth - 0.5) * -24));
+  }
   gsap.to(".hero-inner", { yPercent: 30, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
 
   /* ================= SCROLL ANIMATIONS ================= */

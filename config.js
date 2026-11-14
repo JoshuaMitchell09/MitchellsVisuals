@@ -5,12 +5,16 @@
    ========================================================= */
 window.SITE = {
   hero: {
+    // Foto grande en la portada (déjala "" para no mostrar ninguna)
+    photo: "assets/img/mitchell-2.jpg",
     subtitle: "Capturo momentos con estética de otro tiempo: luz, movimiento y emoción convertidos en imágenes que se sienten del futuro.",
   },
 
   about: {
     // Pon tu foto en assets/img/ y escribe el nombre aquí, ej: "assets/img/mitchell.jpg"
-    photo: "",
+    photo: "assets/img/mitchell-1.jpg",
+    // Segunda foto que aparece al pasar el mouse / tocar la foto
+    photoHover: "assets/img/mitchell-2.jpg",
     tag: "MITCHELL",
     lead: "Soy Mitchell, fotógrafo y creador visual.",
     body: "Me apasiona contar historias a través de la imagen. Trabajo con marcas, artistas y personas que buscan un look distinto, con energía, cuidado en cada detalle y una dirección visual que se recuerda.",
@@ -30,20 +34,24 @@ window.SITE = {
     { title: "Video", desc: "Próximamente: reels, videoclips y piezas audiovisuales.", icon: "video" },
   ],
 
-  // Clientes: pon la foto/logo en assets/img/ y su ruta en "image".
+  // Clientes: pon el logo/foto en assets/img/ y su ruta en "image".
+  // fit: "cover" = la imagen llena el cuadro · "contain" = logo centrado con espacio (ideal para PNG transparentes)
   // "link" es opcional (Instagram o web del cliente).
   clients: [
-    { name: "Cliente Uno", type: "Marca", image: "", link: "" },
-    { name: "Cliente Dos", type: "Evento", image: "", link: "" },
-    { name: "Cliente Tres", type: "Artista", image: "", link: "" },
-    { name: "Cliente Cuatro", type: "Producto", image: "", link: "" },
-    { name: "Cliente Cinco", type: "Retrato", image: "", link: "" },
-    { name: "Cliente Seis", type: "Deportes", image: "", link: "" },
+    { name: "Zona Fut", type: "Fútbol · Medios", image: "", fit: "cover", link: "" },
+    { name: "Ascenso Total", type: "Fútbol · Medios", image: "", fit: "cover", link: "" },
+    { name: "LSBF · Davivienda", type: "Liga deportiva", image: "", fit: "cover", link: "" },
+    { name: "Prime Supplements CR", type: "Suplementos deportivos", image: "", fit: "contain", link: "" },
+    { name: "Suministros PR", type: "Marca", image: "", fit: "cover", link: "" },
+    { name: "IPT", type: "Marca", image: "", fit: "cover", link: "" },
+    { name: "La Adelita", type: "Restaurante", image: "", fit: "contain", link: "" },
+    { name: "Upsidedown", type: "Marca", image: "", fit: "contain", link: "" },
   ],
 
   // Links al portafolio. Cuando tengas el de video, pon el link y cambia soon a false.
   portfolio: [
-    { title: "Fotografía", desc: "Mi trabajo fotográfico completo.", url: "https://example.com", soon: false, cover: "" },
+    { title: "Fotografía", desc: "Todos mis trabajos: retratos, marcas, eventos y más.", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/", soon: false, cover: "assets/img/mitchell-1.jpg" },
+    { title: "Deportes", desc: "Partidos, atletas y la acción del fútbol desde la cancha.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliodeportivo/", soon: false, cover: "assets/img/mitchell-2.jpg" },
     { title: "Video", desc: "Reels, videoclips y piezas audiovisuales.", url: "", soon: true, cover: "" },
   ],
 

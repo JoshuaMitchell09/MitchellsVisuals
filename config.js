@@ -88,7 +88,7 @@ window.SITE = {
     { title: "Marcas & producto", desc: "Fotografía comercial para negocios, catálogos, e-commerce y redes sociales." },
     { title: "Eventos", desc: "Cobertura de eventos sociales, corporativos y lanzamientos." },
     { title: "Contenido para redes", desc: "Fotos listas para Instagram y TikTok, pensadas para tu marca." },
-    { title: "Video", desc: "Próximamente: reels, videoclips y piezas audiovisuales." },
+    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales para marcas, eventos y deportes." },
   ],
 
   // Clientes: pon el logo/foto en assets/img/ y su ruta en "image".
@@ -109,7 +109,7 @@ window.SITE = {
   portfolio: [
     { title: "Fotografía", desc: "Todos mis trabajos: retratos, marcas, eventos y más.", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/", soon: false, cover: "assets/img/portada-fotografia.jpg" },
     { title: "Deportes", desc: "Partidos, atletas y la acción del fútbol desde la cancha.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliodeportivo/", soon: false, cover: "assets/img/portada-deportes.jpg" },
-    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales.", url: "", soon: true, cover: "" },
+    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliovideos/", soon: false, cover: "" },
   ],
 
   contact: [

@@ -509,3 +509,6 @@ body.menu-open .mascot, body.menu-open .sound { opacity: 0 !important; pointer-e
 .portal:nth-child(1) .bg img { object-position: 50% 58%; opacity: .95; filter: brightness(1.35) contrast(1.05); }
 .portal:nth-child(1):hover .bg img { opacity: 1; }
 .portal::before { background: linear-gradient(to top, rgba(10,10,11,.92) 12%, rgba(10,10,11,.15) 60%, rgba(10,10,11,0)); }
+.portal .bg video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; opacity: .75; transition: opacity .8s; }
+.portal:hover .bg video { opacity: 1; }
+.portal.has-video .label::after { content: " · ▶ en reproducción"; color: var(--accent); }

@@ -40,13 +40,19 @@
       const live = !p.soon && p.url;
       const tag = live ? "a" : "div";
       const href = live ? ` href="${esc(p.url)}" target="_blank" rel="noopener"` : "";
-      return `<${tag} class="portal${p.soon ? " soon" : ""}"${href}><div class="bg">${img(p.cover, p.title)}</div>
+      return `<${tag} class="portal${p.soon ? " soon" : ""}${p.video ? " has-video" : ""}"${href}><div class="bg">${p.video ? `<video src="${esc(p.video)}" poster="${esc(p.cover || "")}" muted loop playsinline autoplay preload="metadata"></video>` : img(p.cover, p.title)}</div>
         <span class="label mono">${pad(i)} — ${p.soon ? "Próximamente" : "Disponible"}</span>
         <h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>
         <span class="go">${p.soon ? "Muy pronto" : "Abrir portafolio"} <i>→</i></span></${tag}>`;
     })
     .join("");
 
+  // Videos de portada: solo se reproducen cuando se ven en pantalla
+  const vids = $$(".portal video");
+  if (vids.length && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; if (e.isIntersecting) { v.muted = true; const pr = v.play(); pr && pr.catch(() => {}); } else v.pause(); }), { threshold: 0.15 });
+    vids.forEach((v) => { v.pause(); io.observe(v); });
+  }
   $("#contact-links").innerHTML = S.contact
     .map((c) => `<a class="contact-link" href="${esc(c.url)}" target="_blank" rel="noopener"><small>${esc(c.label)}</small><b>${esc(c.value)}</b></a>`)
     .join("");

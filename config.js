@@ -105,11 +105,11 @@ window.SITE = {
     { name: "Upsidedown", type: "Marca", image: "assets/img/cliente-upsidedown.png", fit: "contain", link: "" },
   ],
 
-  // Links al portafolio. Cuando tengas el de video, pon el link y cambia soon a false.
+  // Links al portafolio. "video" (opcional) = video MP4 que se reproduce de fondo en la tarjeta.
   portfolio: [
     { title: "Fotografía", desc: "Todos mis trabajos: retratos, marcas, eventos y más.", url: "https://mitchellsvisualstellephotography.pixieset.com/mitchellsphotographyportafolio/", soon: false, cover: "assets/img/portada-fotografia.jpg" },
     { title: "Deportes", desc: "Partidos, atletas y la acción del fútbol desde la cancha.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliodeportivo/", soon: false, cover: "assets/img/portada-deportes.jpg" },
-    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliovideos/", soon: false, cover: "" },
+    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales.", url: "https://mitchellsvisualstellephotography.pixieset.com/portafoliovideos/", soon: false, cover: "assets/video/portada-video.jpg", video: "assets/video/portada-video.mp4" },
   ],
 
   contact: [

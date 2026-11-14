@@ -214,13 +214,59 @@
     gsap.set(".film", { visibility: "visible" });
     tl.play(0);
   }
-  const op = gsap.timeline({ onComplete: startFilm, delay: 0.2 })
-    .fromTo(".op-face", { scale: 3.6, opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 1, ease: "power2.out" })
-    .to(".op-face", { scale: 1, duration: 2.4, ease: "expo.inOut" }, "-=0.35")
-    .fromTo(".op-face", { backgroundPosition: "110% 0%" }, { backgroundPosition: "-10% 0%", duration: 2.2, ease: "power2.inOut" }, "<0.4")
-    .fromTo(".op-text > *", { opacity: 0, y: 16 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: "power3.out" }, "-=0.7")
-    .to(".op-face", { scale: 0.92, opacity: 0, duration: 0.7, ease: "power3.in" }, "+=0.9")
-    .to(".op-text > *", { opacity: 0, y: -10, duration: 0.5, stagger: 0.05, ease: "power3.in" }, "<");
+  // Letras del "MEEEEEEEH"
+  const meh = $(".op-meh");
+  meh.innerHTML = [...meh.textContent].map((c) => `<span>${c}</span>`).join("");
+  const J = ".gs-jaw", HEAD = ".gs-head, .gs-horns, .gs-ear-l, .gs-ear-r, .gs-jaw";
+  gsap.set(".gs-camera", { y: 420 });
+  gsap.set(".gs-grass", { svgOrigin: "400 612" });
+  gsap.set(".gs-lid", { scaleY: 0, transformOrigin: "50% 100%" });
+  gsap.set(".gs-ear-l", { svgOrigin: "300 330" });
+  gsap.set(".gs-ear-r", { svgOrigin: "500 330" });
+  gsap.set(".gs-mouth", { svgOrigin: "400 608" });
+  const blink = () => gsap.timeline().to(".gs-lid", { scaleY: 1, duration: 0.07, ease: "none" }).to(".gs-lid", { scaleY: 0, duration: 0.1, ease: "none" }, "+=0.05");
+  const chew = (n) => {
+    const t = gsap.timeline();
+    for (let k = 0; k < n; k++) t.to(J, { y: 9, x: k % 2 ? 2 : -2, duration: 0.14, ease: "sine.inOut" }).to(J, { y: 0, x: 0, duration: 0.14, ease: "sine.inOut" });
+    return t;
+  };
+  const op = gsap.timeline({ onComplete: startFilm, delay: 0.15 })
+    // aparece
+    .fromTo(".op-scene", { opacity: 0, scale: 1.12, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 1.1, ease: "power3.out" })
+    // come pasto
+    .add(chew(9), 0.4)
+    .to(".gs-grass", { scaleX: 0.15, duration: 2.5, ease: "steps(9)" }, 0.4)
+    .add(blink(), 0.9)
+    .to(".gs-ear-l", { rotate: -10, yoyo: true, repeat: 1, duration: 0.15 }, 1.4)
+    .to(".gs-ear-r", { rotate: 10, yoyo: true, repeat: 1, duration: 0.15 }, 2.1)
+    .add(blink(), 2.4)
+    .set(".gs-grass", { opacity: 0 }, 2.95)
+    // agarra la cámara
+    .to(HEAD, { rotate: -3, svgOrigin: "400 600", duration: 0.3, ease: "power2.out" }, 3.0)
+    .to(".gs-camera", { y: 0, duration: 0.65, ease: "back.out(1.4)" }, 3.05)
+    .to(HEAD, { rotate: 0, svgOrigin: "400 600", duration: 0.3 }, 3.5)
+    // ¡clic!
+    .to(".gs-flashbulb", { fill: "#ffffff", duration: 0.05 }, 4.15)
+    .to(".gs-camera", { y: 8, duration: 0.06, yoyo: true, repeat: 1 }, 4.15)
+    .fromTo(".op-flash", { opacity: 0.95 }, { opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, 4.18)
+    .to(".gs-flashbulb", { fill: "#cfd8e0", duration: 0.3 }, 4.4)
+    // baja la cámara
+    .to(".gs-camera", { y: 420, duration: 0.5, ease: "power2.in" }, 4.75)
+    // MEEEEEEEH
+    .to(J, { y: 26, duration: 0.18, ease: "power2.out" }, 5.25)
+    .to(".gs-mouth", { scaleY: 3.2, scaleX: 1.25, duration: 0.18, ease: "power2.out" }, 5.25)
+    .to(".gs-ear-l", { rotate: -9, duration: 0.2 }, 5.25)
+    .to(".gs-ear-r", { rotate: 9, duration: 0.2 }, 5.25)
+    .to(".op-svg", { rotate: 2.5, transformOrigin: "50% 80%", yoyo: true, repeat: 7, duration: 0.09, ease: "sine.inOut" }, 5.3)
+    .fromTo(".op-meh span", { opacity: 0, y: 30, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.3, ease: "back.out(2)" }, 5.3)
+    .to(J, { y: 0, duration: 0.25 }, 6.3)
+    .to(".gs-mouth", { scaleY: 1, scaleX: 1, duration: 0.25 }, 6.3)
+    .to(".gs-ear-l, .gs-ear-r", { rotate: 0, duration: 0.25 }, 6.3)
+    .fromTo(".op-text > *", { opacity: 0, y: 16 }, { opacity: 1, y: 0, stagger: 0.12, duration: 0.7, ease: "power3.out" }, 6.0)
+    // salida
+    .to(".op-meh span", { opacity: 0, y: -20, stagger: 0.02, duration: 0.3 }, 6.9)
+    .to(".op-scene", { scale: 0.94, opacity: 0, duration: 0.6, ease: "power3.in" }, 7.1)
+    .to(".op-text > *", { opacity: 0, y: -10, duration: 0.45, stagger: 0.05, ease: "power3.in" }, 7.1);
 
   $(".intro-skip").addEventListener("click", () => {
     op.kill();

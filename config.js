@@ -28,9 +28,9 @@ window.SITE = {
     // Lista de todo tu equipo (aparece debajo de la cámara 3D)
     kit: [
       { cat: "Cámaras", items: ["Sony α7 II", "Sony α7R"] },
-      { cat: "Lentes", items: ["Sigma 100-400 mm", "16-50 mm"] },
+      { cat: "Lentes", items: ["Sigma 100-400 mm", "Sony 16-50 mm"] },
       { cat: "Audio", items: ["Micrófono DJI Mini 2", "Micrófono DJI 3"] },
-      { cat: "Estabilización", items: ["Estabilizador / gimbal"] },
+      { cat: "Estabilización", items: ["Estabilizador para celular"] },
     ],
   },
 

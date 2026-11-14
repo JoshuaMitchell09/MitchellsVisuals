@@ -112,9 +112,16 @@
     gsap.timeline({ defaults: { ease: "expo.out" } })
       .to(".hero-title .char", { yPercent: 0, duration: 0.5, ease: "steps(4)", stagger: { each: 0.05, from: "random" } })
       .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 }, 0.35)
-      .to(".nav, .hero-meta", { opacity: 1, duration: 1.2 }, 0.6);
+      .to(".nav, .hero-meta", { opacity: 1, duration: 1.2 }, 0.6)
+      .fromTo(".hero-goat", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.6, ease: "expo.out" }, 0.15);
+    // la cabra del hero respira y de vez en cuando mastica
+    gsap.to(".hero-goat", { y: -10, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.8 });
+    gsap.timeline({ repeat: -1, repeatDelay: 3.5, delay: 2.5 })
+      .to(".hg-jaw", { y: "1.1%", duration: 0.14, ease: "sine.inOut", yoyo: true, repeat: 5 })
+      .to(".hero-goat", { rotate: -2, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, "+=0.6");
     ScrollTrigger.refresh();
   }
+  gsap.to(".hero-goat", { yPercent: 12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
   gsap.to(".hero-inner", { yPercent: 20, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
 
   /* ================= SCROLL ================= */

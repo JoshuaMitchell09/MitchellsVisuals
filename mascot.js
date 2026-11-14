@@ -21,7 +21,7 @@
   const MR = { x: 0.87, y: 0.965, s: 0.44, face: -1 }, ML = { x: 0.7, y: 0.965, s: 0.44, face: -1 };
   const SPOTS = {
     trabajo:    { d: L, m: ML },
-    top:        { d: { x: 0.74, y: 0.62, s: 1.9, face: -1 }, m: { x: 0.78, y: 0.3, s: 0.62, face: -1 } },
+    top:        { d: R, m: MR },
     equipo:     { d: R, m: MR },
     sobre:      { d: L, m: ML },
     servicios:  { d: R, m: MR },

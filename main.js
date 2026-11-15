@@ -120,6 +120,25 @@
       .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 }, 0.35)
       .to(".nav, .hero-meta", { opacity: 1, duration: 1.2 }, 0.6)
       .fromTo(".hero-goat", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.6, ease: "expo.out" }, 0.15);
+    // la cabeza a veces dice "meeeh" (con sonido si la música está activa)
+    let mehN = 0;
+    const heroMeh = () => {
+      const visible = scrollY < innerHeight * 0.6 && !document.hidden && !document.body.classList.contains("menu-open");
+      if (visible) {
+        window.SFX && SFX.play(mehN++ % 2 ? "meh-2" : "meh-1");
+        gsap.timeline()
+          .to(".hg-jaw", { y: "2.6%", duration: 0.12, ease: "power2.out" })
+          .to(".hero-goat", { rotate: 4, duration: 0.07, yoyo: true, repeat: 5, ease: "sine.inOut" }, 0)
+          .fromTo(".hg-say", { autoAlpha: 0, scale: 0.6, y: 10 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(2.2)" }, 0)
+          .to(".hg-jaw", { y: 0, duration: 0.25, ease: "power2.in" }, 0.6)
+          .to(".hero-goat", { rotate: 0, duration: 0.2 }, 0.7)
+          .to(".hg-say", { autoAlpha: 0, y: -8, duration: 0.3 }, 1.6);
+      }
+      gsap.delayedCall(gsap.utils.random(9, 16), heroMeh);
+    };
+    gsap.delayedCall(4.5, heroMeh);
+    $(".hero-goat").style.pointerEvents = "auto";
+    $(".hero-goat").addEventListener("click", () => { gsap.killTweensOf(heroMeh); heroMeh(); });
     // la cabra del hero respira y de vez en cuando mastica
     gsap.to(".hero-goat", { y: -10, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.8 });
     gsap.timeline({ repeat: -1, repeatDelay: 3.5, delay: 2.5 })

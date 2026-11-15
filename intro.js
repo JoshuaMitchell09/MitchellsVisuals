@@ -22,6 +22,21 @@
     const p = audio.play();
     return p && p.then ? p.then(() => true).catch((e) => { console.warn("No se pudo reproducir la música:", e); syncBtn(); return false; }) : Promise.resolve(true);
   }
+  /* Efectos de sonido (balidos). Suenan solo si la música está activa,
+     así respetan el botón de sonido y las reglas de autoplay. */
+  const SFX = {};
+  ["meh-largo", "meh-1", "meh-2"].forEach((n) => { const a = new Audio(`assets/audio/${n}.mp3`); a.preload = "auto"; a.volume = 1; SFX[n] = a; });
+  window.SFX = {
+    play(name, { duck = true } = {}) {
+      const a = SFX[name];
+      if (!a || !audio || audio.paused) return;
+      try { a.currentTime = 0; const p = a.play(); p && p.catch(() => {}); } catch (e) {}
+      if (duck && window.gsap) {
+        const v = audio.volume;
+        gsap.timeline().to(audio, { volume: Math.min(v, 0.25), duration: 0.12 }).to(audio, { volume: 0.8, duration: 0.6 }, `+=${Math.max(0.3, (a.duration || 1) - 0.2)}`);
+      }
+    },
+  };
   const soundBtn = $(".sound");
   function syncBtn() {
     const on = audio && !audio.paused;
@@ -253,6 +268,7 @@
     // baja la cámara
     .to(".gs-camera", { y: 420, duration: 0.5, ease: "power2.in" }, 4.75)
     // MEEEEEEEH
+    .call(() => window.SFX && window.SFX.play("meh-largo"), null, 5.2)
     .to(J, { y: 46, duration: 0.18, ease: "power2.out" }, 5.25)
     .to(".gs-mouth", { scaleY: 4.2, scaleX: 1.1, duration: 0.18, ease: "power2.out" }, 5.25)
     .to(".gs-ear-l", { rotate: -9, duration: 0.2 }, 5.25)

@@ -82,13 +82,20 @@ window.SITE = {
     ],
   },
 
+  // Servicios (pestañas). "includes" = lista de lo que incluye cada servicio.
   services: [
-    { title: "Deportes", desc: "Fútbol, baloncesto y acción en vivo. Cobertura de partidos, atletas y eventos deportivos." },
-    { title: "Retratos", desc: "Sesiones personales y profesionales con dirección de pose, luz y estilo." },
-    { title: "Marcas & producto", desc: "Fotografía comercial para negocios, catálogos, e-commerce y redes sociales." },
-    { title: "Eventos", desc: "Cobertura de eventos sociales, corporativos y lanzamientos." },
-    { title: "Contenido para redes", desc: "Fotos listas para Instagram y TikTok, pensadas para tu marca." },
-    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales para marcas, eventos y deportes." },
+    { title: "Deportes", desc: "Fútbol, baloncesto y acción en vivo. Cobertura de partidos, atletas y eventos deportivos.",
+      includes: ["Cobertura completa del partido o evento", "Fotos de acción, celebración y afición", "Edición profesional de color", "Entrega rápida para redes y medios"] },
+    { title: "Retratos", desc: "Sesiones personales y profesionales con dirección de pose, luz y estilo.",
+      includes: ["Dirección de pose y estilo", "Iluminación de estudio o natural", "Selección y retoque de las mejores fotos", "Galería privada en línea"] },
+    { title: "Marcas & producto", desc: "Fotografía comercial para negocios, catálogos, e-commerce y redes sociales.",
+      includes: ["Fotos de producto y ambiente", "Concepto visual según tu marca", "Formatos para web, catálogo y redes", "Uso comercial de las imágenes"] },
+    { title: "Eventos", desc: "Cobertura de eventos sociales, corporativos y lanzamientos.",
+      includes: ["Cobertura de principio a fin", "Momentos clave, invitados y detalles", "Edición profesional", "Galería para compartir"] },
+    { title: "Contenido para redes", desc: "Fotos listas para Instagram y TikTok, pensadas para tu marca.",
+      includes: ["Fotos verticales y horizontales", "Contenido pensado para engagement", "Entregas por paquete mensual", "Ideas y guion visual"] },
+    { title: "Video", desc: "Reels, videoclips y piezas audiovisuales para marcas, eventos y deportes.",
+      includes: ["Reels de 15 a 60 segundos", "Grabación con estabilizador y audio DJI", "Edición, color y música", "Formatos para cada red"] },
   ],
 
   // Clientes: pon el logo/foto en assets/img/ y su ruta en "image".

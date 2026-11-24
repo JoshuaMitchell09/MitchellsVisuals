@@ -6,7 +6,7 @@
   <title>Mitchell Visuals</title>
   <meta name="description" content="Mitchell Visuals — fotógrafo en Costa Rica. Fotografía deportiva, retratos y marcas. Fútbol, baloncesto y contenido para redes." />
   <meta name="author" content="Mitchell Visuals" />
-  <meta name="theme-color" content="#0a0a0b" />
+  <meta name="theme-color" content="#ecebe7" />
   <link rel="icon" type="image/png" href="assets/mark.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Mitchell Visuals" />
@@ -23,8 +23,9 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Anton&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Anton&family=Oswald:wght@200;300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="editorial.css" />
 </head>
 <body class="is-loading">
 
@@ -177,119 +178,122 @@
   <div class="scroll-bar"></div>
 
   <!-- ================= NAV ================= -->
-  <header class="nav">
+  <header class="nav ed-nav">
     <a href="#top" class="nav-logo" aria-label="Inicio"><img src="assets/mark.png" alt="Mitchell Visuals" /></a>
-    <nav class="nav-links">
-      <a href="#trabajo" class="nav-work">Trabajo</a>
-      <a href="#equipo">Equipo</a>
-      <a href="#sobre">Sobre mí</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#clientes">Clientes</a>
-      <a href="#portafolio">Portafolio</a>
-      <a href="#contacto" class="nav-cta">Contacto</a>
-      <div class="nav-foot mono" id="nav-foot"></div>
+    <div class="pills">
+      <button class="pill pill-menu" type="button" aria-label="Abrir menú">Menú <i></i></button>
+      <a class="pill pill-cta" href="#contacto">Contacto <span>→</span></a>
+    </div>
+    <span class="nav-right mono">Costa Rica · <span id="clock">--:--</span></span>
+    <nav class="menu" aria-label="Menú">
+      <div class="menu-links">
+        <a href="#top"><small class="mono">00</small>Inicio</a>
+        <a href="#sobre"><small class="mono">01</small>Sobre mí</a>
+        <a href="#portafolio"><small class="mono">02</small>Portafolio</a>
+        <a href="#servicios"><small class="mono">03</small>Servicios</a>
+        <a href="#equipo"><small class="mono">04</small>Equipo</a>
+        <a href="#clientes"><small class="mono">05</small>Clientes</a>
+        <a href="#contacto"><small class="mono">06</small>Contacto</a>
+      </div>
+      <div class="menu-foot mono" id="nav-foot"></div>
     </nav>
-    <button class="nav-burger" aria-label="Menú"><span></span><span></span></button>
   </header>
 
   <main id="top">
-    <!-- ================= HERO ================= -->
-    <section class="hero">
+    <!-- ================= HERO (claro, editorial) ================= -->
+    <section class="ed-hero light">
+      <div class="ed-glow" aria-hidden="true"></div>
+      <h1 class="ed-name">
+        <span class="line"><span data-split>Mitchell</span></span>
+        <span class="line"><span data-split>Visuals</span></span>
+      </h1>
+      <p class="ed-sub" id="hero-sub"></p>
       <div class="hero-goat" aria-hidden="true">
         <img class="hg-face" src="assets/goat-dt-face.webp" alt="" />
         <img class="hg-jaw" src="assets/goat-dt-jaw.webp" alt="" />
         <span class="hg-say">Meeeeh!</span>
       </div>
-      <div class="hero-inner">
-        <p class="eyebrow mono reveal-up">Fotografía — Video</p>
-        <h1 class="hero-title">
-          <span class="line"><span class="word" data-split>Mitchell</span></span>
-          <span class="line"><span class="word muted" data-split>Visuals</span></span>
-        </h1>
-        <p class="hero-sub reveal-up" id="hero-sub"></p>
-        <div class="hero-actions reveal-up">
-          <a class="btn btn-primary magnetic" href="#portafolio">Ver portafolio</a>
-          <a class="btn btn-ghost magnetic" href="#contacto">Contacto</a>
-        </div>
+      <div class="ed-side mono">
+        <span>Fotografía</span><span>Video</span><span>Deportes</span><span>Marcas</span>
       </div>
-      <div class="hero-trust">
+      <div class="ed-trust">
         <span class="mono">Han confiado en mí</span>
         <div class="trust-track"><div class="trust-row" id="trust-row"></div></div>
       </div>
-      <div class="hero-meta mono">
-        <span>Est. 2025</span>
-        <span class="scroll-hint">Scroll <i></i></span>
-        <span id="clock">--:--:--</span>
-      </div>
     </section>
 
-    <!-- ================= TRABAJO SELECCIONADO ================= -->
-    <section class="section work" id="trabajo">
-      <div class="section-head">
-        <span class="mono idx">Trabajo seleccionado</span>
-        <h2 class="section-title" data-split>Trabajo</h2>
-      </div>
+    <!-- ================= OSCURO 1: Sobre mí ================= -->
+    <div class="dark-zone" data-reveal>
+      <section class="section ed-about" id="sobre">
+        <div class="about-grid">
+          <div class="about-photo"><div class="frame" id="about-photo"></div><div class="ed-glow small" aria-hidden="true"></div></div>
+          <div class="about-text">
+            <span class="mono idx">01 — Sobre mí</span>
+            <h2 class="ed-h2" data-split>Cabra solo hay una</h2>
+            <p class="lead" id="about-lead"></p>
+            <p class="body" id="about-body"></p>
+            <div class="stats" id="stats"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= TRABAJO SELECCIONADO (opcional) ================= -->
+    <section class="section work light" id="trabajo">
+      <div class="section-head"><span class="mono idx">Trabajo seleccionado</span><h2 class="ed-h2" data-split>Trabajo</h2></div>
       <div class="gallery" id="gallery"></div>
     </section>
 
-    <!-- ================= EQUIPO ================= -->
-    <section class="section kit" id="equipo">
-      <div class="section-head">
-        <span class="mono idx">01 — Equipo</span>
-        <h2 class="section-title" data-split>Mi equipo</h2>
-        <p class="section-intro">Todo lo que llevo a cada sesión.</p>
+    <!-- ================= PORTAFOLIO: texto partido con foto ================= -->
+    <section class="ed-split light" id="portafolio">
+      <div class="split-stage">
+        <span class="split-word w1">Porta</span>
+        <div class="split-card"><div class="split-imgs" id="split-imgs"></div></div>
+        <span class="split-word w2">Folio</span>
       </div>
-      <div class="kit-grid" id="kit-grid"></div>
+      <p class="split-hint mono">02 — Elige una categoría</p>
     </section>
-
-    <!-- ================= SOBRE MÍ ================= -->
-    <section class="section about" id="sobre">
-      <div class="section-head">
-        <span class="mono idx">02 — Sobre mí</span>
-        <h2 class="section-title" data-split>Sobre mí</h2>
-      </div>
-      <div class="about-grid">
-        <div class="about-photo"><div class="frame" id="about-photo"></div></div>
-        <div class="about-text">
-          <p class="lead" id="about-lead"></p>
-          <p class="body" id="about-body"></p>
-          <div class="stats" id="stats"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= SERVICIOS ================= -->
-    <section class="section services" id="servicios">
-      <div class="section-head">
-        <span class="mono idx">03 — Servicios</span>
-        <h2 class="section-title" data-split>Servicios</h2>
-      </div>
-      <div class="services-list" id="services"></div>
-    </section>
-
-    <!-- ================= CLIENTES ================= -->
-    <section class="section clients" id="clientes">
-      <div class="section-head">
-        <span class="mono idx">04 — Clientes</span>
-        <h2 class="section-title" data-split>Clientes</h2>
-      </div>
-      <p class="section-intro">Marcas y personas que han confiado en mi lente.</p>
-      <div class="clients-grid" id="clients"></div>
-    </section>
-
-    <!-- ================= PORTAFOLIO ================= -->
-    <section class="section portfolio" id="portafolio">
-      <div class="section-head">
-        <span class="mono idx">05 — Portafolio</span>
-        <h2 class="section-title" data-split>Portafolio</h2>
-      </div>
+    <section class="section light ed-portals">
       <div class="portals" id="portals"></div>
     </section>
 
+    <!-- ================= FOTO A PANTALLA COMPLETA ================= -->
+    <section class="ed-full" aria-label="El instante exacto">
+      <img src="assets/img/portada-deportes.jpg" alt="Celebración de gol fotografiada por Mitchell Visuals" loading="lazy" />
+      <div class="ed-full-text"><span class="mono">Fútbol · Costa Rica</span><h2 data-split>El instante exacto</h2></div>
+    </section>
+
+    <!-- ================= OSCURO 2: Servicios + Equipo ================= -->
+    <div class="dark-zone" data-reveal>
+      <section class="section ed-services" id="servicios">
+        <div class="section-head">
+          <span class="mono idx">03 — Servicios</span>
+          <h2 class="ed-h2" data-split>Servicios</h2>
+        </div>
+        <div class="tabs" role="tablist" id="svc-tabs"></div>
+        <div class="tab-panel" id="svc-panel" role="tabpanel"></div>
+      </section>
+
+      <section class="section kit" id="equipo">
+        <div class="section-head">
+          <span class="mono idx">04 — Equipo</span>
+          <h2 class="ed-h2" data-split>Mi equipo</h2>
+        </div>
+        <div class="kit-grid" id="kit-grid"></div>
+      </section>
+    </div>
+
+    <!-- ================= CLIENTES (claro) ================= -->
+    <section class="section light ed-clients" id="clientes">
+      <span class="mono idx">05 — Clientes</span>
+      <h2 class="ed-mega" data-split>Marcas y resultados</h2>
+      <div class="clients-grid" id="clients"></div>
+    </section>
+
     <!-- ================= CONTACTO ================= -->
-    <section class="section contact" id="contacto">
+    <section class="section light ed-contact" id="contacto">
       <p class="mono eyebrow"><span class="dot"></span> Disponible para proyectos</p>
-      <h2 class="contact-title"><span data-split>¿Creamos algo</span><br /><span class="accent" data-split>juntos?</span></h2>
+      <h2 class="ed-mega" data-split>Hablemos</h2>
       <div class="contact-links" id="contact-links"></div>
     </section>
   </main>

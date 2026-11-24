@@ -22,9 +22,22 @@
     .map((s) => `<div class="stat"><b data-count="${s.value}" data-suffix="${esc(s.suffix)}">0${esc(s.suffix)}</b><span>${esc(s.label)}</span></div>`)
     .join("");
 
-  $("#services").innerHTML = S.services
-    .map((s, i) => `<article class="service"><span class="num mono">${pad(i)}</span><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p><i>→</i></article>`)
-    .join("");
+  // Servicios: pestañas
+  const waL = (S.contact.find((c) => c.label.toLowerCase() === "whatsapp") || {}).url || "#contacto";
+  $("#svc-tabs").innerHTML = S.services.map((s, i) => `<button class="tab" role="tab" type="button" data-i="${i}" aria-selected="${i === 0}">${esc(s.title)}</button>`).join("");
+  const showSvc = (i) => {
+    const s = S.services[i];
+    $$("#svc-tabs .tab").forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
+    $("#svc-panel").innerHTML = `<div><h3 class="tp-title">${esc(s.title)}</h3><p class="tp-desc">${esc(s.desc)}</p><a class="tp-cta" href="${esc(waL)}" target="_blank" rel="noopener">Cotizar por WhatsApp <span>→</span></a></div>
+      <ul class="tp-inc"><span class="mono">Incluye</span>${(s.includes || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+    window.gsap && gsap.from("#svc-panel > *", { y: 20, opacity: 0, duration: 0.6, stagger: 0.08, ease: "power3.out" });
+  };
+  $$("#svc-tabs .tab").forEach((t) => t.addEventListener("click", () => showSvc(+t.dataset.i)));
+  showSvc(0);
+
+  // Portafolio: fotos que cambian dentro de "PORTA[foto]FOLIO"
+  const splitSrc = S.portfolio.map((p) => p.cover).filter(Boolean);
+  $("#split-imgs").innerHTML = splitSrc.map((s, i) => `<img src="${esc(s)}" alt="" class="${i ? "" : "on"}" />`).join("");
 
   $("#clients").innerHTML = S.clients
     .map((c) => {
@@ -86,16 +99,17 @@
   }
 
   $$("[data-split]").forEach((el) => {
-    el.innerHTML = [...el.textContent].map((c) => (c === " " ? " " : `<span class="char">${esc(c)}</span>`)).join("");
+    el.innerHTML = el.textContent.split(" ").map((w) => `<span class="word-wrap">${[...w].map((c) => `<span class="char">${esc(c)}</span>`).join("")}</span>`).join(" ");
   });
 
   const clock = $("#clock");
-  const tick = () => (clock.textContent = new Date().toLocaleTimeString("es", { hour12: false }));
+  const tick = () => (clock.textContent = new Date().toLocaleTimeString("es-CR", { hour: "2-digit", minute: "2-digit", hour12: false }));
   tick(); setInterval(tick, 1000);
 
   // Menú móvil
-  $(".nav-burger").addEventListener("click", () => document.body.classList.toggle("menu-open"));
-  $$(".nav-links a").forEach((a) => a.addEventListener("click", () => document.body.classList.remove("menu-open")));
+  $(".pill-menu").addEventListener("click", () => document.body.classList.toggle("menu-open"));
+  $$(".menu-links a, .pill-cta").forEach((a) => a.addEventListener("click", () => document.body.classList.remove("menu-open")));
+  addEventListener("keydown", (e) => e.key === "Escape" && document.body.classList.remove("menu-open"));
 
   /* ================= SIN GSAP ================= */
   if (!window.gsap || reduced) {
@@ -108,17 +122,19 @@
 
 
   /* ================= HERO ================= */
-  gsap.set(".hero-title .char", { yPercent: 105 });
-  gsap.set(".hero .reveal-up", { y: 20, opacity: 0 });
-  gsap.set(".nav, .hero-meta", { opacity: 0 });
+  gsap.set(".ed-name .char", { yPercent: 110 });
+  gsap.set(".ed-sub, .ed-side, .ed-trust", { y: 20, opacity: 0 });
+  gsap.set(".ed-nav", { opacity: 0 });
+  gsap.set(".ed-hero .ed-glow", { scale: 0.4, opacity: 0, transformOrigin: "30% 60%" });
 
   window.MV_HERO_IN = heroIn;
   function heroIn() {
     window.MASCOT && MASCOT.start();
     gsap.timeline({ defaults: { ease: "expo.out" } })
-      .to(".hero-title .char", { yPercent: 0, duration: 0.5, ease: "steps(4)", stagger: { each: 0.05, from: "random" } })
-      .to(".hero .reveal-up", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 }, 0.35)
-      .to(".nav, .hero-meta", { opacity: 1, duration: 1.2 }, 0.6)
+      .to(".ed-hero .ed-glow", { scale: 1, opacity: 1, duration: 2.2, ease: "expo.out" }, 0)
+      .to(".ed-name .char", { yPercent: 0, duration: 1.2, stagger: 0.04 }, 0.2)
+      .to(".ed-sub, .ed-side, .ed-trust", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1 }, 0.6)
+      .to(".ed-nav", { opacity: 1, duration: 1 }, 0.5)
       .fromTo(".hero-goat", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.6, ease: "expo.out" }, 0.15);
     // la cabeza a veces dice "meeeh" (con sonido si la música está activa)
     let mehN = 0;
@@ -126,6 +142,7 @@
       const visible = scrollY < innerHeight * 0.6 && !document.hidden && !document.body.classList.contains("menu-open");
       if (visible) {
         window.SFX && SFX.play(mehN++ % 2 ? "meh-2" : "meh-1");
+        const hgEl = $(".hero-goat"); hgEl.classList.add("colorful"); setTimeout(() => hgEl.classList.remove("colorful"), 1700);
         gsap.timeline()
           .to(".hg-jaw", { y: "2.6%", duration: 0.12, ease: "power2.out" })
           .to(".hero-goat", { rotate: 4, duration: 0.07, yoyo: true, repeat: 5, ease: "sine.inOut" }, 0)
@@ -146,8 +163,30 @@
       .to(".hero-goat", { rotate: -2, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, "+=0.6");
     ScrollTrigger.refresh();
   }
-  gsap.to(".hero-goat", { yPercent: 12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
-  gsap.to(".hero-inner", { yPercent: 20, opacity: 0, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to(".ed-name", { yPercent: -30, ease: "none", scrollTrigger: { trigger: ".ed-hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to(".ed-hero .ed-glow", { yPercent: -18, ease: "none", scrollTrigger: { trigger: ".ed-hero", start: "top top", end: "bottom top", scrub: true } });
+
+  /* Círculo negro que "traga" la pantalla antes de cada zona oscura */
+  $$("[data-reveal]").forEach((zone) => {
+    const prev = zone.previousElementSibling; if (!prev) return;
+    prev.style.overflow = "hidden";
+    const dot = document.createElement("div"); dot.className = "reveal-dot"; prev.appendChild(dot);
+    gsap.fromTo(dot, { scale: 0 }, { scale: 1, ease: "power1.in", scrollTrigger: { trigger: prev, start: "bottom 98%", end: "bottom 0%", scrub: true } });
+  });
+
+  /* PORTA [foto] FOLIO: las palabras se separan y la foto crece */
+  const imgs = $$("#split-imgs img");
+  const cardW = () => Math.min(innerWidth * (innerWidth < 820 ? 0.78 : 0.4), 620);
+  const shift = () => (innerWidth < 820 ? 0 : innerWidth * 0.03);
+  gsap.timeline({ scrollTrigger: { trigger: ".ed-split", start: "top top", end: "bottom bottom", scrub: 0.6,
+      onUpdate: (st) => { const k = Math.min(imgs.length - 1, Math.floor(st.progress * imgs.length * 1.2)); imgs.forEach((im, i) => im.classList.toggle("on", i === Math.max(0, k))); } } })
+    .fromTo(".split-card", { width: 0, rotate: -8 }, { width: cardW, rotate: -3, ease: "power2.out", duration: 0.6 })
+    .fromTo(".split-word.w1", { x: 0 }, { x: () => -shift(), ease: "power2.out", duration: 0.6 }, 0)
+    .fromTo(".split-word.w2", { x: 0 }, { x: () => shift(), ease: "power2.out", duration: 0.6 }, 0)
+    .to(".split-card", { scale: 1.08, rotate: 0, duration: 0.4 });
+
+  /* Foto a pantalla completa con parallax */
+  gsap.fromTo(".ed-full img", { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: ".ed-full", start: "top bottom", end: "bottom top", scrub: true } });
 
   /* ================= SCROLL ================= */
   gsap.to(".scroll-bar", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } });
@@ -156,10 +195,9 @@
   const up = (targets, trigger, extra = {}) =>
     gsap.from(targets, { y: 40, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.08, scrollTrigger: { trigger, start: "top 85%" }, ...extra });
 
-  $$(".section-title, .contact-title [data-split]").forEach((el) =>
+  $$(".ed-h2, .ed-mega, .ed-full-text h2").forEach((el) =>
     gsap.from(el.querySelectorAll(".char"), {
-      opacity: 0, yPercent: () => gsap.utils.random(-40, 40), rotate: () => gsap.utils.random(-14, 14),
-      duration: 0.45, ease: "steps(3)", stagger: { each: 0.045, from: "random" },
+      yPercent: 110, duration: 1.1, ease: "expo.out", stagger: 0.025,
       scrollTrigger: { trigger: el, start: "top 88%" },
     })
   );
@@ -187,11 +225,9 @@
   up(".kit-col", ".kit-grid", { stagger: 0.1 });
 
   // Servicios
-  up(".service", ".services-list", { stagger: 0.07 });
 
   // Clientes
   up(".client", ".clients-grid", { y: 30, stagger: 0.05 });
-  up(".section-intro", ".section-intro");
 
   // Portafolio
   up(".portal", ".portals", { y: 60, stagger: 0.12 });

@@ -141,7 +141,7 @@
     if (reduced) { state.x = s0.x; place(); say(LINES.top); return; }
     jumpTo("top");
     keys.forEach((k) => {
-      const el = k === "top" ? $(".hero") : document.getElementById(k);
+      const el = k === "top" ? $(".ed-hero") : document.getElementById(k);
       if (!el || !window.ScrollTrigger) return;
       ScrollTrigger.create({ trigger: el, start: "top 55%", end: "bottom 55%", onEnter: () => jumpTo(k), onEnterBack: () => jumpTo(k) });
     });

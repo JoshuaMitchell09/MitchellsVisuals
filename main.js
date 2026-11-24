@@ -53,15 +53,25 @@
       const live = !p.soon && p.url;
       const tag = live ? "a" : "div";
       const href = live ? ` href="${esc(p.url)}" target="_blank" rel="noopener"` : "";
-      return `<${tag} class="portal${p.soon ? " soon" : ""}${p.video ? " has-video" : ""}"${href}><div class="bg">${p.video ? `<video src="${esc(p.video)}" poster="${esc(p.cover || "")}" muted loop playsinline autoplay preload="metadata"></video>` : img(p.cover, p.title)}</div>
-        <span class="label mono">${pad(i)} — ${p.soon ? "Próximamente" : "Disponible"}</span>
-        <h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>
-        <span class="go">${p.soon ? "Muy pronto" : "Abrir portafolio"} <i>→</i></span></${tag}>`;
+      const media = p.video
+        ? `<video src="${esc(p.video)}" poster="${esc(p.cover || "")}" muted loop playsinline autoplay preload="metadata"></video>`
+        : img(p.cover, p.title);
+      const badge = p.soon ? "Próximamente" : p.video ? "▶ Video" : "Galería";
+      return `<${tag} class="pf-card${p.soon ? " soon" : ""}"${href}>
+        <div class="pf-media">${media}</div>
+        <div class="pf-top"><span class="pf-num">${pad(i)}</span><span class="pf-badge mono">${badge}</span></div>
+        <div class="pf-bottom">
+          <h3 class="pf-title">${esc(p.title)}</h3>
+          <p class="pf-desc">${esc(p.desc)}</p>
+          <span class="pf-go">${p.soon ? "Muy pronto" : "Ver galería"} <i>↗</i></span>
+        </div>
+      </${tag}>`;
     })
     .join("");
+  $("#pf-count").textContent = `${String(S.portfolio.length).padStart(2, "0")} categorías`;
 
   // Videos de portada: solo se reproducen cuando se ven en pantalla
-  const vids = $$(".portal video");
+  const vids = $$(".pf-card video, .portal video");
   if (vids.length && "IntersectionObserver" in window) {
     const io = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; if (e.isIntersecting) { v.muted = true; const pr = v.play(); pr && pr.catch(() => {}); } else v.pause(); }), { threshold: 0.15 });
     vids.forEach((v) => { v.pause(); io.observe(v); });
@@ -176,14 +186,14 @@
 
   /* PORTA [foto] FOLIO: las palabras se separan y la foto crece */
   const imgs = $$("#split-imgs img");
-  const cardW = () => Math.min(innerWidth * (innerWidth < 820 ? 0.78 : 0.4), 620);
+  const cardW = () => Math.min(innerWidth * (innerWidth < 820 ? 0.78 : 0.3), 460);
   const shift = () => (innerWidth < 820 ? 0 : innerWidth * 0.03);
   gsap.timeline({ scrollTrigger: { trigger: ".ed-split", start: "top top", end: "bottom bottom", scrub: 0.6,
       onUpdate: (st) => { const k = Math.min(imgs.length - 1, Math.floor(st.progress * imgs.length * 1.2)); imgs.forEach((im, i) => im.classList.toggle("on", i === Math.max(0, k))); } } })
     .fromTo(".split-card", { width: 0, rotate: -8 }, { width: cardW, rotate: -3, ease: "power2.out", duration: 0.6 })
     .fromTo(".split-word.w1", { x: 0 }, { x: () => -shift(), ease: "power2.out", duration: 0.6 }, 0)
     .fromTo(".split-word.w2", { x: 0 }, { x: () => shift(), ease: "power2.out", duration: 0.6 }, 0)
-    .to(".split-card", { scale: 1.08, rotate: 0, duration: 0.4 });
+    .to(".split-card", { rotate: 0, duration: 0.4 });
 
   /* Foto a pantalla completa con parallax */
   gsap.fromTo(".ed-full img", { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: ".ed-full", start: "top bottom", end: "bottom top", scrub: true } });
@@ -209,7 +219,7 @@
     });
   expose(".about-photo .frame img:not(.alt)", ".about");
   expose(".client img", ".clients-grid");
-  expose(".portal .bg img", ".portals");
+  expose(".pf-media img", ".pf-grid");
   $$(".section-head .idx").forEach((el) => up(el, el));
 
   // Sobre mí
@@ -230,7 +240,9 @@
   up(".client", ".clients-grid", { y: 30, stagger: 0.05 });
 
   // Portafolio
-  up(".portal", ".portals", { y: 60, stagger: 0.12 });
+  up(".pf-card", ".pf-grid", { y: 80, stagger: 0.12 });
+  up(".pf-head > *", ".pf-head");
+  if (innerWidth > 820) gsap.utils.toArray(".pf-card").forEach((c, i) => gsap.fromTo(c.querySelector(".pf-media"), { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: true } }));
 
   // Contacto
   up(".contact .eyebrow", ".contact");
@@ -271,8 +283,8 @@
   const qx = gsap.quickTo(cv, "x", { duration: 0.35, ease: "power3" }), qy = gsap.quickTo(cv, "y", { duration: 0.35, ease: "power3" });
   addEventListener("pointermove", (e) => { qx(e.clientX); qy(e.clientY); });
   document.addEventListener("pointerover", (e) => {
-    const t = e.target.closest(".g-item, a.portal");
+    const t = e.target.closest(".g-item, a.portal, a.pf-card");
     cv.classList.toggle("on", !!t);
-    cv.textContent = t && t.classList.contains("portal") ? "Abrir" : "Ver";
+    cv.textContent = t && (t.classList.contains("portal") || t.classList.contains("pf-card")) ? "Abrir" : "Ver";
   });
 })();

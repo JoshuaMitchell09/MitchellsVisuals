@@ -76,6 +76,32 @@
     const io = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; if (e.isIntersecting) { v.muted = true; const pr = v.play(); pr && pr.catch(() => {}); } else v.pause(); }), { threshold: 0.15 });
     vids.forEach((v) => { v.pause(); io.observe(v); });
   }
+  // Proceso
+  $("#process").innerHTML = (S.process || []).map((p, i) => `<li><span class="pr-n">${pad(i)}</span><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></li>`).join("");
+  // Testimonios (solo si hay)
+  const TQ = S.testimonials || [];
+  if (TQ.length) {
+    $("#quotes").innerHTML = TQ.map((t) => `<figure class="q-card">${t.logo ? `<img src="${esc(t.logo)}" alt="" loading="lazy" />` : ""}<blockquote>“${esc(t.quote)}”</blockquote><figcaption><b>${esc(t.name)}</b><span class="mono">${esc(t.role || "")}</span></figcaption></figure>`).join("");
+  } else $("#testimonios").remove();
+  // Preguntas frecuentes
+  $("#faq-list").innerHTML = (S.faq || []).map((f) => `<details><summary>${esc(f.q)}<i></i></summary><p>${esc(f.a)}</p></details>`).join("");
+  // Formulario de cotización → WhatsApp / correo con el mensaje ya escrito
+  const qf = $("#quote");
+  $("#q-servicio").innerHTML += S.services.map((s) => `<option>${esc(s.title)}</option>`).join("");
+  const waNum = ((S.contact.find((c) => c.label.toLowerCase() === "whatsapp") || {}).url || "").replace(/\D/g, "");
+  const mail = ((S.contact.find((c) => c.label.toLowerCase() === "email") || {}).url || "").replace("mailto:", "");
+  const buildMsg = () => {
+    const d = Object.fromEntries(new FormData(qf).entries());
+    if (!d.nombre.trim() || !d.servicio) { $("#q-err").textContent = "Escribe tu nombre y elige un servicio."; (d.nombre.trim() ? qf.servicio : qf.nombre).focus(); return null; }
+    $("#q-err").textContent = "";
+    const fecha = d.fecha ? new Date(d.fecha + "T12:00").toLocaleDateString("es-CR", { day: "numeric", month: "long", year: "numeric" }) : "";
+    return [`¡Hola Mitchell! Soy ${d.nombre.trim()} y quiero cotizar: *${d.servicio}*.`, fecha && `📅 Fecha: ${fecha}`, d.lugar && `📍 Lugar: ${d.lugar}`, d.presupuesto && `💰 Presupuesto: ${d.presupuesto}`, d.mensaje && `📝 ${d.mensaje}`, "(Enviado desde mitchellsvisuals)"].filter(Boolean).join("\n");
+  };
+  qf.addEventListener("submit", (e) => { e.preventDefault(); const m = buildMsg(); if (m) window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(m)}`, "_blank", "noopener"); });
+  $("#q-mail").addEventListener("click", () => { const m = buildMsg(); if (m) location.href = `mailto:${mail}?subject=${encodeURIComponent("Cotización — " + qf.servicio.value)}&body=${encodeURIComponent(m.replace(/\*/g, ""))}`; });
+  // Volver a ver la intro
+  $("#replay").addEventListener("click", (e) => { e.preventDefault(); try { localStorage.removeItem("mv-intro-visto"); } catch (er) {} scrollTo(0, 0); location.reload(); });
+
   $("#contact-links").innerHTML = S.contact
     .map((c) => `<a class="contact-link" href="${esc(c.url)}" target="_blank" rel="noopener"><small>${esc(c.label)}</small><b>${esc(c.value)}</b></a>`)
     .join("");
@@ -93,7 +119,7 @@
   } else { $("#trabajo").remove(); const nw = $(".nav-work"); nw && nw.remove(); }
 
   // Footer
-  const navLinks = [["#equipo", "Equipo"], ["#sobre", "Sobre mí"], ["#servicios", "Servicios"], ["#clientes", "Clientes"], ["#portafolio", "Portafolio"]];
+  const navLinks = [["#sobre", "Sobre mí"], ["#portafolio", "Portafolio"], ["#servicios", "Servicios"], ["#proceso", "Cómo trabajo"], ["#clientes", "Clientes"], ["#faq", "Preguntas"]];
   const find = (l) => S.contact.find((c) => c.label.toLowerCase() === l) || null;
   const col = (t, items) => `<div><span class="mono">${t}</span>${items.filter(Boolean).map(([h2, l, ext]) => `<a href="${esc(h2)}"${ext ? ' target="_blank" rel="noopener"' : ""}>${esc(l)}</a>`).join("")}</div>`;
   const ig = find("instagram"), wa = find("whatsapp"), em = find("email"), pf = find("portafolio");
@@ -247,6 +273,10 @@
   // Contacto
   up(".contact .eyebrow", ".contact");
   up(".contact-link", ".contact-links");
+  up(".process li", ".process", { stagger: 0.12 });
+  up(".faq details", ".faq", { y: 20, stagger: 0.06 });
+  up(".quote > *", ".quote", { y: 20, stagger: 0.05 });
+  if ($(".q-card")) up(".q-card", ".quotes", { stagger: 0.12 });
 
   /* ================= INTERACCIÓN ================= */
   if (matchMedia("(hover: hover)").matches) {

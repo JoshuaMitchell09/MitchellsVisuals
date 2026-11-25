@@ -39,12 +39,35 @@ window.SITE = {
   // Ejemplo: { src: "assets/img/trabajo/gol.jpg", title: "Final de liga", cat: "Fútbol" },
   gallery: [],
 
+  // "Cómo trabajo": pasos del proceso
+  process: [
+    { title: "Contacto", desc: "Me escribes por WhatsApp o con el formulario y me cuentas tu idea." },
+    { title: "Plan", desc: "Definimos fecha, lugar, estilo y lo que necesitas recibir." },
+    { title: "Sesión", desc: "Fotografío o grabo el día acordado, cuidando cada detalle." },
+    { title: "Entrega", desc: "Recibes tus fotos editadas en una galería en línea, listas para usar." },
+  ],
+
+  // Testimonios: la sección aparece sola cuando agregas al menos uno.
+  // Ejemplo: { quote: "Las fotos del partido quedaron increíbles.", name: "Nombre Apellido", role: "Zona Fut", logo: "assets/img/cliente-zonafut.jpg" },
+  testimonials: [],
+
+  // Preguntas frecuentes (edítalas con tus respuestas reales)
+  faq: [
+    { q: "¿Cuánto tarda la entrega?", a: "Depende del servicio y de la cantidad de fotos. Al cotizar te confirmo la fecha exacta de entrega." },
+    { q: "¿Cómo recibo las fotos?", a: "En una galería en línea donde puedes verlas y descargarlas en alta calidad." },
+    { q: "¿Trabajas fuera de tu zona?", a: "Escríbeme con la ubicación y la fecha, y te confirmo disponibilidad." },
+    { q: "¿También haces video?", a: "Sí: reels, videoclips y piezas para marcas, eventos y deportes. Mira la categoría Video del portafolio." },
+    { q: "¿Cómo reservo una fecha?", a: "Escríbeme por WhatsApp o con el formulario de esta página; confirmamos detalles y apartamos la fecha." },
+  ],
+
   // Lo que dice la cabra en cada sección (y al hacerle clic)
   mascot: {
     lines: {
       top: "¡Meeeeeeh! Bienvenido.",
       trabajo: "Esto es lo que hago.",
       equipo: "Con esto hago la magia.",
+      proceso: "Así de fácil, meeeh.",
+      faq: "¿Dudas? Aquí las resuelvo.",
       sobre: "Recuerda: cabra solo hay una.",
       servicios: "¿Qué necesitas? Yo me encargo.",
       clientes: "Ellos ya confiaron. ¿Sigues tú?",

@@ -279,6 +279,14 @@
         <div class="tab-panel" id="svc-panel" role="tabpanel"></div>
       </section>
 
+      <section class="section ed-process" id="proceso">
+        <div class="section-head">
+          <span class="mono idx">Cómo trabajo</span>
+          <h2 class="ed-h2" data-split>Del mensaje a la entrega</h2>
+        </div>
+        <ol class="process" id="process"></ol>
+      </section>
+
       <section class="section kit" id="equipo">
         <div class="section-head">
           <span class="mono idx">04 — Equipo</span>
@@ -295,11 +303,48 @@
       <div class="clients-grid" id="clients"></div>
     </section>
 
+    <!-- ================= TESTIMONIOS (aparece cuando hay al menos uno) ================= -->
+    <section class="section light ed-quotes" id="testimonios">
+      <span class="mono idx">Lo que dicen</span>
+      <div class="quotes" id="quotes"></div>
+    </section>
+
+    <!-- ================= PREGUNTAS FRECUENTES ================= -->
+    <section class="section light ed-faq" id="faq">
+      <div class="faq-grid">
+        <div><span class="mono idx">Preguntas frecuentes</span><h2 class="ed-h2" data-split>Dudas comunes</h2></div>
+        <div class="faq" id="faq-list"></div>
+      </div>
+    </section>
+
     <!-- ================= CONTACTO ================= -->
     <section class="section light ed-contact" id="contacto">
       <p class="mono eyebrow"><span class="dot"></span> Disponible para proyectos</p>
       <h2 class="ed-mega" data-split>Hablemos</h2>
-      <div class="contact-links" id="contact-links"></div>
+      <div class="contact-grid">
+        <form class="quote" id="quote" novalidate>
+          <p class="mono quote-k">Cotiza tu proyecto</p>
+          <div class="q-row">
+            <label>Tu nombre<input name="nombre" required autocomplete="name" placeholder="¿Cómo te llamas?" /></label>
+            <label>Servicio<select name="servicio" required id="q-servicio"><option value="">Elige uno</option></select></label>
+          </div>
+          <div class="q-row">
+            <label>Fecha<input name="fecha" type="date" /></label>
+            <label>Lugar<input name="lugar" placeholder="Ciudad o estadio" /></label>
+          </div>
+          <label>Presupuesto aproximado<select name="presupuesto">
+            <option value="">Prefiero conversarlo</option>
+            <option>Menos de ₡50 000</option><option>₡50 000 – ₡150 000</option><option>₡150 000 – ₡300 000</option><option>Más de ₡300 000</option>
+          </select></label>
+          <label>Cuéntame tu idea<textarea name="mensaje" rows="3" placeholder="Tipo de evento, cuántas fotos o videos necesitas, etc."></textarea></label>
+          <div class="q-actions">
+            <button class="q-send" type="submit">Enviar por WhatsApp <span>→</span></button>
+            <button class="q-mail mono" type="button" id="q-mail">o por correo</button>
+          </div>
+          <p class="q-err mono" id="q-err" role="alert"></p>
+        </form>
+        <div class="contact-links" id="contact-links"></div>
+      </div>
     </section>
   </main>
 
@@ -317,7 +362,7 @@
     <div class="f-cols" id="f-cols"></div>
     <div class="f-bottom">
       <p class="mono">© <span id="year"></span> Mitchell Visuals · Hecho en Costa Rica</p>
-      <a href="#top" class="to-top mono">Volver arriba ↑</a>
+      <span class="f-bl"><a href="#intro" class="mono replay" id="replay">Ver intro de nuevo</a> · <a href="#top" class="to-top mono">Volver arriba ↑</a></span>
     </div>
   </footer>
 

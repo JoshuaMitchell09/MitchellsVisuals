@@ -69,6 +69,7 @@
   const done = () => {
     if (intro.dataset.done) return;
     intro.dataset.done = "1";
+    try { localStorage.setItem("mv-intro-visto", "1"); } catch (e) {}
     gsap.ticker.fps(60);
     clearInterval(boilTimer);
     intro.remove();
@@ -90,7 +91,10 @@
   }
   autoMusic();
 
-  if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  // Quien ya vio la intro entra directo (se puede volver a ver desde el footer)
+  let seen = false;
+  try { seen = localStorage.getItem("mv-intro-visto") === "1" && !location.hash.includes("intro"); } catch (e) {}
+  if (seen || !window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) {
     intro.remove(); document.body.classList.remove("is-loading"); window.MV_HERO_IN && window.MV_HERO_IN();
     return;
   }

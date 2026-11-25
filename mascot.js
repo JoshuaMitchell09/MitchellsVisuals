@@ -23,6 +23,8 @@
     trabajo:    { d: L, m: ML },
     top:        { d: R, m: MR },
     equipo:     { d: R, m: MR },
+    proceso:    { d: L, m: ML },
+    faq:        { d: R, m: MR },
     sobre:      { d: L, m: ML },
     servicios:  { d: R, m: MR },
     clientes:   { d: L, m: ML },
@@ -56,6 +58,7 @@
   let bubbleTl;
   function say(text, hold = 3.2) {
     if (!text) return;
+    if (isMobile()) hold = Math.min(hold, 1.6);
     bubbleSide();
     bubbleText.textContent = "";
     bubbleTl && bubbleTl.kill();

@@ -11,6 +11,9 @@ Todo el contenido está en **`config.js`**: textos, estadísticas, servicios, cl
 - Galería "Trabajo seleccionado" → sube fotos a `assets/img/trabajo/` y agrégalas en `gallery` (aparece con 3 o más).
 - Música → reemplaza `assets/audio/musica.mp3` (mismo nombre).
 - Frases de la cabra → `mascot` en `config.js`.
+- Testimonios → `testimonials` en `config.js` (la sección aparece con al menos uno).
+- Preguntas frecuentes → `faq` · Pasos del proceso → `process` · Lo que incluye cada servicio → `services[].includes`.
+- La intro completa se ve solo en la primera visita; en el footer está "Ver intro de nuevo".
 
 Recomendado: fotos en `.jpg` o `.webp`, máximo ~2000px de ancho, para que cargue rápido.
 
